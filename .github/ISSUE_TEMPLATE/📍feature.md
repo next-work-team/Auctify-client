@@ -1,19 +1,19 @@
 ---
 name: "\U0001F4CDFeature"
 about: Feature 작업 사항
-title: ''
-labels: ''
+title: ""
+labels: ""
 assignees: minpppal
-
 ---
 
 제목 : [FEAT]
-내용 :
+
 ## 📌 작업 내용
 
 > 구현하려는 기능에 대해 간결하게 설명해주세요
 
 ## ✅ To Do
+
 - [ ] TODO
 - [ ] TODO
 - [ ] TODO
