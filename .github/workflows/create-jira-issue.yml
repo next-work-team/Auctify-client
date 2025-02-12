@@ -7,7 +7,7 @@ jobs:
   create-issue-team-member-1:
     name: Create Jira issue for Team Member 1
     runs-on: ubuntu-latest
-    if: github.actor == 'team_member_1_username' # 특정 팀원만 실행
+    if: github.actor == 'dongwook98'
     steps:
       - name: Login
         uses: atlassian/gajira-login@v3
@@ -27,7 +27,7 @@ jobs:
   create-issue-team-member-3:
     name: Create Jira issue for Team Member 3
     runs-on: ubuntu-latest
-    if: github.actor == 'team_member_3_username' # 다른 팀원만 실행
+    if: github.actor == 'minpppal'
     steps:
       - name: Login
         uses: atlassian/gajira-login@v3
