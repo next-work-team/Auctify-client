@@ -1,70 +1,24 @@
-name: Create Jira issue
-
-on:
+name: Create Jira issue # 1
+on: # 2
   issues:
-    types: [opened] # 이슈가 열릴 때마다 트리거
+    types: [opened]
 
-jobs:
-  create-issue:
-    name: Create Jira issue
-    runs-on: ubuntu-latest
-    steps:
-      - name: Login to Jira for Team Member 1
-        uses: atlassian/gajira-login@v3
+jobs: # 3
+  create-issue: # 4
+    name: Create Jira issue # 5
+    runs-on: ubuntu-latest # 6
+    steps: # 7
+      - name: Login
+        uses: atlassian/gajira-login@v3 # 8
         env:
-          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
-          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN_TeamMember1 }}
-          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL_TeamMember1 }}
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }} # 9
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN_TEAMMEMBER3 }}
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL_TEAMMEMBER3 }}
 
-      - name: Create Issue in Jira for Team Member 1
+      - name: Create Issue
         uses: atlassian/gajira-create@v3
         with:
-          project: HIWJ # Jira 프로젝트 키
-          issuetype: Task # 이슈 타입
-          summary: "${{ github.event.issue.title }}"
-          description: "${{ github.event.issue.html_url }}"
-
-      - name: Login to Jira for Team Member 2
-        uses: atlassian/gajira-login@v3
-        env:
-          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
-          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN_TeamMember2 }}
-          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL_TeamMember2 }}
-
-      - name: Create Issue in Jira for Team Member 2
-        uses: atlassian/gajira-create@v3
-        with:
-          project: HIWJ # Jira 프로젝트 키
-          issuetype: Task # 이슈 타입
-          summary: "${{ github.event.issue.title }}"
-          description: "${{ github.event.issue.html_url }}"
-
-      - name: Login to Jira for Team Member 3
-        uses: atlassian/gajira-login@v3
-        env:
-          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
-          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN_TeamMember3 }}
-          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL_TeamMember3 }}
-
-      - name: Create Issue in Jira for Team Member 3
-        uses: atlassian/gajira-create@v3
-        with:
-          project: HIWJ # Jira 프로젝트 키
-          issuetype: Task # 이슈 타입
-          summary: "${{ github.event.issue.title }}"
-          description: "${{ github.event.issue.html_url }}"
-
-      - name: Login to Jira for Team Member 4
-        uses: atlassian/gajira-login@v3
-        env:
-          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
-          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN_TeamMember4 }}
-          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL_TeamMember4 }}
-
-      - name: Create Issue in Jira for Team Member 4
-        uses: atlassian/gajira-create@v3
-        with:
-          project: HIWJ # Jira 프로젝트 키
-          issuetype: Task # 이슈 타입
+          project: KAN # 10 - 프로젝트 key
+          issuetype: Task # 11 - 이슈 타입
           summary: "${{ github.event.issue.title }}"
           description: "${{ github.event.issue.html_url }}"
