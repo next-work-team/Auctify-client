@@ -1,24 +1,81 @@
-name: Create Jira issue # 1
-on: # 2
+name: Create Jira issue
+on:
   issues:
     types: [opened]
 
-jobs: # 3
-  create-issue: # 4
-    name: Create Jira issue # 5
-    runs-on: ubuntu-latest # 6
-    steps: # 7
+jobs:
+  create-issue-team-member-1:
+    name: Create Jira issue for Team Member 1
+    runs-on: ubuntu-latest
+    steps:
       - name: Login
-        uses: atlassian/gajira-login@v3 # 8
+        uses: atlassian/gajira-login@v3
         env:
-          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }} # 9
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN_TEAMMEMBER1 }}
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL_TEAMMEMBER1 }}
+
+      - name: Create Issue
+        uses: atlassian/gajira-create@v3
+        with:
+          project: KAN
+          issuetype: Task
+          summary: "${{ github.event.issue.title }}"
+          description: "${{ github.event.issue.html_url }}"
+
+  create-issue-team-member-2:
+    name: Create Jira issue for Team Member 2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login
+        uses: atlassian/gajira-login@v3
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN_TEAMMEMBER2 }}
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL_TEAMMEMBER2 }}
+
+      - name: Create Issue
+        uses: atlassian/gajira-create@v3
+        with:
+          project: KAN
+          issuetype: Task
+          summary: "${{ github.event.issue.title }}"
+          description: "${{ github.event.issue.html_url }}"
+
+  create-issue-team-member-3:
+    name: Create Jira issue for Team Member 3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login
+        uses: atlassian/gajira-login@v3
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN_TEAMMEMBER3 }}
           JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL_TEAMMEMBER3 }}
 
       - name: Create Issue
         uses: atlassian/gajira-create@v3
         with:
-          project: KAN # 10 - 프로젝트 key
-          issuetype: Task # 11 - 이슈 타입
+          project: KAN
+          issuetype: Task
+          summary: "${{ github.event.issue.title }}"
+          description: "${{ github.event.issue.html_url }}"
+
+  create-issue-team-member-4:
+    name: Create Jira issue for Team Member 4
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login
+        uses: atlassian/gajira-login@v3
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN_TEAMMEMBER4 }}
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL_TEAMMEMBER4 }}
+
+      - name: Create Issue
+        uses: atlassian/gajira-create@v3
+        with:
+          project: KAN
+          issuetype: Task
           summary: "${{ github.event.issue.title }}"
           description: "${{ github.event.issue.html_url }}"
