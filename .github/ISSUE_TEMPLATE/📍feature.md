@@ -1,6 +1,6 @@
 ---
-name: 이슈 생성
-about: 이슈 생성 템플릿을 사용하여 이슈를 생성하기.
+name: "\U0001F4CDFeature"
+about: Feature 작업 사항
 title: ''
 labels: ''
 assignees: minpppal

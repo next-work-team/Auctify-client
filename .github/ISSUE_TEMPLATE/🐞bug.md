@@ -1,6 +1,6 @@
 ---
-name: Bug
-about: 버그 템플릿을 사용하여 버그 템플릿 생성.
+name: "\U0001F41EBug"
+about: Bug 리포트
 title: ''
 labels: ''
 assignees: minpppal
