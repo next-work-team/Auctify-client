@@ -1,0 +1,28 @@
+name: Set PR title from commit message
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  set-pr-title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Get commit message and set PR title
+        run: |
+          # 최신 커밋 메시지 추출
+          COMMIT_MSG=$(git log -1 --pretty=%s)
+
+          # 'Merge'와 'into' 키워드 및 40자리 커밋 해시 제거
+          PR_TITLE=$(echo "$COMMIT_MSG" | sed 's/Merge.*into//g' | sed 's/[0-9a-f]\{40\}//g')
+
+          # PR 제목 설정
+          curl -X PATCH \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -d "{\"title\": \"$PR_TITLE\"}" \
+            https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
