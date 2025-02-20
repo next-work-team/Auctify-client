@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import '@fontsource/pretendard';
 import '@fontsource/roboto';
-import './globals.css';
+import '@/app/globals.css';
 
-import Providers from './providers';
+import Providers from '@/app/providers';
 
 export const metadata: Metadata = {
   title: 'Auctify - 실시간 경매 플랫폼',
