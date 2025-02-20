@@ -147,6 +147,10 @@ export default {
         'head-15': ['20px', { fontWeight: '500' }],
         'head-16': ['20px', { fontWeight: '400' }],
       },
+      fontFamily: {
+        sans: ['var(--font-pretendard)', 'sans-serif'],
+        number: ['var(--font-roboto)', 'sans-serif'],
+      },
     },
   },
 } satisfies Config;
