@@ -14,7 +14,7 @@ jobs:
       - name: Install mustache (to update the date)
         run: apk add ruby && gem install mustache
       - name: creates output
-        run: sh ./build.sh
+        run: sh .github/scripts/build.sh
       - name: Push to Forked Repository
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
