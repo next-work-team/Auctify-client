@@ -11,9 +11,13 @@ jobs:
     container: pandoc/latex
     steps:
       - uses: actions/checkout@v2
-      - name: Install mustache (to update the date)
-        run: apk add ruby && gem install mustache
-      - name: creates output
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.1.0'
+      - name: Install dependencies
+        run: npm install
+      - name: Run build script
         run: sh .github/scripts/build.sh
       - name: Push to Forked Repository
         id: push_directory
