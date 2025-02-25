@@ -1,3 +1,3 @@
 export default function HomePage() {
-  return <div>포크 레포지 동기화 Test7</div>;
+  return <div>포크 레포지 동기화 Test8</div>;
 }
