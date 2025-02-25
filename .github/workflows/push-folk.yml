@@ -1,0 +1,35 @@
+name: git push into another repo to deploy to vercel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: pandoc/latex
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install mustache (to update the date)
+        run: apk add ruby && gem install mustache
+      - name: creates output
+        run: sh ./build.sh
+      - name: Push to Forked Repository
+        id: push_directory
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.FORK_SYNC_TOKEN }}
+        with:
+          source-directory: 'output'
+          destination-github-username: minpppal
+          destination-repository-name: Auctify-client
+          user-email: ${{ secrets.JIRA_USER_EMAIL_TEAMMEMBER3 }}
+          commit-message: 'Sync from team repository'
+          target-branch: main
+      - name: Test get variable exported by push-to-another-repository
+        run: |
+          curl -X POST -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: token ${{ secrets.FORK_SYNC_TOKEN }}" \
+          https://api.github.com/repos/minpppal/Auctify-client/dispatches \
+          -d '{"event_type": "sync_fork"}'
