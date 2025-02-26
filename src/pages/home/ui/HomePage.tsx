@@ -7,7 +7,7 @@ export default function HomePage() {
       포크 레포지 동기화 Test8
       <div>
         아이콘 테스트
-        <ArrowDown />
+        <ArrowDown width={128} height={128} className="*:stroke-blue-500" />
         <ArrowLeft />
       </div>
     </div>
