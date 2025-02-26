@@ -9,9 +9,9 @@ export const metadata: Metadata = {
   title: 'Auctify - 실시간 경매 플랫폼',
   description: '실시간 경매 플랫폼',
   icons: {
-    icon: '/image/favicon.ico',
-    shortcut: '/image/favicon-32x32.png', // 북마크 아이콘
-    apple: '/image/apple-touch-icon.png', // iOS 및 macOS Safari용 아이콘
+    icon: '/images/favicon.ico',
+    shortcut: '/images/favicon-32x32.png', // 북마크 아이콘
+    apple: '/images/apple-touch-icon.png', // iOS 및 macOS Safari용 아이콘
   },
 };
 
