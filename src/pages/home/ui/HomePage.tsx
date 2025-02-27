@@ -1,6 +1,8 @@
 import ArrowDown from '@icons/arrow-down.svg';
 import ArrowLeft from '@icons/arrow-left.svg';
 
+import { Button } from '@/shared/ui/Button';
+
 export default function HomePage() {
   return (
     <div>
@@ -9,6 +11,10 @@ export default function HomePage() {
         아이콘 테스트
         <ArrowDown width={128} height={128} className="*:stroke-blue-500" />
         <ArrowLeft />
+      </div>
+      <div>
+        <p>shadcn/ui 테스트</p>
+        <Button>버튼입니다</Button>
       </div>
     </div>
   );
