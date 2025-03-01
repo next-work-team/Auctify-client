@@ -1,4 +1,5 @@
 import KakaoLoginButton from './KakaoLoginButton';
+import GoogleLoginButton from './GoogleLoginButton';
 
 export default function SigninPage() {
   return (
@@ -12,6 +13,7 @@ export default function SigninPage() {
       <p className="text-center text-head-16 text-grayscale-b0">
         AUCTIFY에서 경험해보세요
       </p>
+      <GoogleLoginButton />
       <KakaoLoginButton />
     </>
   );
