@@ -1,4 +1,4 @@
-import { AuctionDetailPage } from '@/pages/auction-read';
+import { AuctionDetailPage } from '@/pages/auction-detail-read';
 
 export default function Page() {
   return <AuctionDetailPage />;
