@@ -1,21 +1,21 @@
-import ArrowDown from '@icons/arrow-down.svg';
-import ArrowLeft from '@icons/arrow-left.svg';
-
-import { Button } from '@/shared/ui/Button';
+import BannerSection from './BannerSection';
+import ClosingSoonAuctionSection from './ClosingSoonAuctionSection';
+import PopularAuctionSection from './PopularAuctionSection';
+import CategorySection from './CategorySection';
+import HowToUseSection from './HowToUseSection';
 
 export default function HomePage() {
   return (
-    <div>
-      포크 레포지 동기화 Test8
-      <div>
-        아이콘 테스트
-        <ArrowDown width={128} height={128} className="*:stroke-blue-500" />
-        <ArrowLeft />
-      </div>
-      <div>
-        <p>shadcn/ui 테스트</p>
-        <Button>버튼입니다</Button>
-      </div>
+    <div className="mx-auto">
+      <BannerSection />
+      {/* 마감 임박 경매 섹션 */}
+      <ClosingSoonAuctionSection />
+      {/* 인기 경매 섹션 */}
+      <PopularAuctionSection />
+      {/* 카테고리 섹션 */}
+      <CategorySection />
+      {/* 경매 이용 방법 섹션 */}
+      <HowToUseSection />
     </div>
   );
 }
