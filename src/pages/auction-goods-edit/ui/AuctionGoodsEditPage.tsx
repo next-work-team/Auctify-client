@@ -1,3 +1,3 @@
-export default function AuctionEditPage() {
+export function AuctionGoodsEditPage() {
   return <div>경매품 수정 페이지</div>;
 }

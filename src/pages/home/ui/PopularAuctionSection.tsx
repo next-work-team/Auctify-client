@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/Tabs';
-import { GoodsCard } from '@/entities/goods';
+import { GoodsCard } from '@/entities/auction-goods';
 
 export default function PopularAuctionSection() {
   return (

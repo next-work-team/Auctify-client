@@ -1,5 +1,5 @@
 import { Button } from '@/shared/ui/Button';
-import { GoodsCard } from '@/entities/goods';
+import { GoodsCard } from '@/entities/auction-goods';
 
 export default function ClosingSoonAuctionSection() {
   return (
