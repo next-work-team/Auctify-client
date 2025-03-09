@@ -1,3 +1,1 @@
-import AuctionGoodsCard from './ui/AuctionGoodsCard';
-
-export { AuctionGoodsCard };
+export { AuctionGoodsCard } from './ui/AuctionGoodsCard';

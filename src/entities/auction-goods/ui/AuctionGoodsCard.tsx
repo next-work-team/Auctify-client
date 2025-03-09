@@ -15,7 +15,7 @@ interface AuctionCardProps {
   seller?: string;
 }
 
-export default function AuctionGoodsCard({
+export function AuctionGoodsCard({
   id,
   title,
   currentBid,

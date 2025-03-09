@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/Tabs';
-import { GoodsCard } from '@/entities/auction-goods';
+import { AuctionGoodsCard } from '@/entities/auction-goods';
 
 export default function PopularAuctionSection() {
   return (
@@ -23,63 +23,69 @@ export default function PopularAuctionSection() {
           </TabsList>
           <TabsContent value="all" className="mt-0">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              <GoodsCard
+              <AuctionGoodsCard
+                id={1}
                 title="애플 맥북 프로 M2"
                 image="https://placehold.co/400x300"
-                currentBid="1,450,000"
+                currentBid={1450000}
                 timeLeft="2일 4시간"
-                bidCount={32}
+                bids={32}
               />
-              <GoodsCard
+              <AuctionGoodsCard
+                id={2}
                 title="빈티지 LP 레코드 세트"
                 image="https://placehold.co/400x300"
-                currentBid="280,000"
+                currentBid={280000}
                 timeLeft="1일 12시간"
-                bidCount={18}
+                bids={18}
               />
-              <GoodsCard
+              <AuctionGoodsCard
+                id={3}
                 title="명품 가죽 핸드백"
                 image="https://placehold.co/400x300"
-                currentBid="850,000"
+                currentBid={850000}
                 timeLeft="3일 8시간"
-                bidCount={45}
+                bids={45}
               />
-              <GoodsCard
+              <AuctionGoodsCard
+                id={4}
                 title="한정판 스니커즈"
                 image="https://placehold.co/400x300"
-                currentBid="320,000"
+                currentBid={320000}
                 timeLeft="5시간"
-                bidCount={64}
-                hot={true}
+                bids={12}
               />
-              <GoodsCard
+              <AuctionGoodsCard
+                id={5}
                 title="디자이너 가구"
                 image="https://placehold.co/400x300"
-                currentBid="650,000"
+                currentBid={650000}
                 timeLeft="4일 2시간"
-                bidCount={12}
+                bids={32}
               />
-              <GoodsCard
+              <AuctionGoodsCard
+                id={6}
                 title="골동품 시계"
                 image="https://placehold.co/400x300"
-                currentBid="420,000"
+                currentBid={420000}
                 timeLeft="2일 18시간"
-                bidCount={28}
+                bids={28}
               />
-              <GoodsCard
+              <AuctionGoodsCard
+                id={7}
                 title="게이밍 PC 세트"
                 image="https://placehold.co/400x300"
-                currentBid="1,850,000"
+                currentBid={1850000}
                 timeLeft="1일 6시간"
-                bidCount={37}
-                hot={true}
+                bids={37}
               />
-              <GoodsCard
+              <AuctionGoodsCard
+                id={8}
                 title="미술 작품"
                 image="https://placehold.co/400x300"
-                currentBid="750,000"
+                currentBid={750000}
                 timeLeft="5일 10시간"
-                bidCount={15}
+                bids={15}
               />
             </div>
           </TabsContent>
