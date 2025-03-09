@@ -1,5 +1,5 @@
 import { Button } from '@/shared/ui/Button';
-import { GoodsCard } from '@/entities/auction-goods';
+import { AuctionGoodsCard } from '@/entities/auction-goods';
 
 export default function ClosingSoonAuctionSection() {
   return (
@@ -14,25 +14,28 @@ export default function ClosingSoonAuctionSection() {
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <GoodsCard
+          <AuctionGoodsCard
+            id={1}
             title="빈티지 카메라 컬렉션"
             image="https://placehold.co/600x400"
-            currentBid="520,000"
-            bidCount={24}
+            currentBid={520000}
+            bids={24}
             timeLeft="01:45:32"
           />
-          <GoodsCard
+          <AuctionGoodsCard
+            id={2}
             title="한정판 스니커즈"
             image="https://placehold.co/600x400"
-            currentBid="350,000"
-            bidCount={18}
+            currentBid={350000}
+            bids={18}
             timeLeft="00:32:15"
           />
-          <GoodsCard
+          <AuctionGoodsCard
+            id={3}
             title="명품 시계"
             image="https://placehold.co/600x400"
-            currentBid="1,250,000"
-            bidCount={36}
+            currentBid={1250000}
+            bids={36}
             timeLeft="02:10:45"
           />
         </div>
