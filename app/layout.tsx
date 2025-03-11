@@ -3,6 +3,7 @@ import '@fontsource/pretendard';
 import '@fontsource/roboto';
 import '@/app/globals.css';
 
+import { Header } from '@/shared/ui/header/Header';
 import Providers from '@/app/providers';
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans">
+        <Header />
         <Providers>{children}</Providers>
       </body>
     </html>

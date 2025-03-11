@@ -245,5 +245,5 @@ export default {
   		}
   	}
   },
-  plugins: [tailwindanimate],
+  plugins: [tailwindanimate, require('tailwindcss-animate')],
 } satisfies Config;
