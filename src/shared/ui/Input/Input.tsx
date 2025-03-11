@@ -2,6 +2,7 @@
 import React from 'react';
 import { useFormContext, RegisterOptions } from 'react-hook-form';
 
+import { Input as ShadInput } from '@/components/ui/input';
 interface IdInputProps {
   name: string;
   type: string;
@@ -20,11 +21,11 @@ export function Input({ name, type, placeholder, validation }: IdInputProps) {
 
   return (
     <div className="w-full">
-      <input
-        className="w-full h-10 px-4 text-black text-[15px] border-none outline-none rounded-md placeholder-gray-400"
+      <ShadInput
         type={type}
         placeholder={placeholder}
         {...register(name, validation)}
+        className="w-full h-10 px-4 placeholder-gray-400 border border-gray-300 focus:!ring-0 focus:!outline-none"
       />
       {isSubmitted && errors[name] && (
         <div className="text-red-500 text-[10px] mt-1">{errorMessage}</div>
