@@ -2,7 +2,7 @@
 import React from 'react';
 import { useFormContext, RegisterOptions } from 'react-hook-form';
 
-import { Input as ShadInput } from '@/components/ui/input';
+import { Input as ShadInput } from '@/shared/ui/input';
 interface IdInputProps {
   name: string;
   type: string;
