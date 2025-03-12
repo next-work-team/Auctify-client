@@ -1,11 +1,12 @@
-import { Clock, Heart } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import Link from 'next/link';
 
 import { Button } from '@/shared/ui/Button';
 import { Card, CardContent, CardFooter } from '@/shared/ui/Card';
-import { cn } from '@/shared/lib/utils';
 
 import { AuctionGoods } from '../models/types';
+
+import LikeAuctionGoods from './LikeAuctionGoods';
 
 export function AuctionGoodsCard({
   auctionGoods: {
@@ -33,13 +34,7 @@ export function AuctionGoodsCard({
         height={300}
         className="object-cover w-full aspect-[4/3]"
       />
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute top-2 right-2 h-8 w-8 rounded-full bg-background/80 backdrop-blur-sm"
-      >
-        <Heart className={cn('h-4 w-4', isLike && 'fill-red-400')} />
-      </Button>
+      <LikeAuctionGoods isLike={isLike} />
       <div className="absolute left-2 top-2 flex gap-x-2">
         {category && (
           <div className="bg-background/80 backdrop-blur-sm text-xs px-2 py-1 rounded">
