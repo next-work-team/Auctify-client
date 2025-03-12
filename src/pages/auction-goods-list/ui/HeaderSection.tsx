@@ -11,7 +11,7 @@ import {
   SheetTrigger,
 } from '@/shared/ui/Sheet';
 
-import FilterSection from './FilterSection';
+// import FilterSection from './FilterSection';
 
 export default function HeaderSection({ length }: { length: number }) {
   return (
@@ -39,7 +39,8 @@ export default function HeaderSection({ length }: { length: number }) {
               </SheetDescription>
             </SheetHeader>
             <div className="py-4">
-              <FilterSection />
+              {/* TODO filter 상태관리 라이브러리 도입 후 추가 */}
+              {/* <FilterSection /> */}
             </div>
             <div className="flex justify-between mt-4">
               <Button variant="outline" size="sm">
