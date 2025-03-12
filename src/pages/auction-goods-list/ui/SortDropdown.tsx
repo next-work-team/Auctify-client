@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 import {
   Select,
@@ -8,9 +8,18 @@ import {
   SelectValue,
 } from '@/shared/ui/Select';
 
-export default function SortDropdown() {
+import { SortingMethod } from '../models/types';
+
+export default function SortDropdown({
+  setSortingMethod,
+}: {
+  setSortingMethod: Dispatch<SetStateAction<SortingMethod>>;
+}) {
   return (
-    <Select defaultValue="ending-soon">
+    <Select
+      defaultValue="ending-soon"
+      onValueChange={(value) => setSortingMethod(value as SortingMethod)}
+    >
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="정렬 기준" />
       </SelectTrigger>

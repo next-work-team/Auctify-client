@@ -1,31 +1,27 @@
 import Link from 'next/link';
-import { Clock, Heart } from 'lucide-react';
+import { Clock } from 'lucide-react';
 
 import { Button } from '@/shared/ui';
+import LikeAuctionGoods from '@/entities/auction-goods/ui/LikeAuctionGoods';
 
-interface AuctionListItemProps {
-  id: number;
-  title: string;
-  currentBid: number;
-  image: string;
-  timeLeft: string;
-  bids: number;
-  category: string;
-  seller: string;
-  condition: string;
-}
+import { AuctionGoods } from '../models/types';
 
 export function AuctionGoodsListItem({
-  id,
-  title,
-  currentBid,
-  image,
-  timeLeft,
-  bids,
-  category,
-  seller,
-  condition,
-}: AuctionListItemProps) {
+  auctionGoods: {
+    id,
+    title,
+    currentBid,
+    image,
+    bidCount,
+    category,
+    condition,
+    isLike,
+    seller,
+    timeLeft,
+  },
+}: {
+  auctionGoods: AuctionGoods;
+}) {
   return (
     <div className="flex flex-col sm:flex-row gap-4 border rounded-lg overflow-hidden bg-card hover:shadow-md transition-shadow">
       <div className="relative w-full sm:w-48 h-48">
@@ -35,14 +31,19 @@ export function AuctionGoodsListItem({
           alt={title}
           className="w-full h-full object-cover"
         />
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute right-2 top-2 h-8 w-8 rounded-full bg-background/80 backdrop-blur-sm"
-        >
-          <Heart className="h-4 w-4" />
-          <span className="sr-only">찜하기</span>
-        </Button>
+        <div className="absolute left-2 top-2 flex gap-x-2">
+          {category && (
+            <div className="bg-background/80 backdrop-blur-sm text-xs px-2 py-1 rounded">
+              {category}
+            </div>
+          )}
+          {condition && (
+            <div className="bg-background/80 backdrop-blur-sm text-xs px-2 py-1 rounded">
+              {condition}
+            </div>
+          )}
+        </div>
+        <LikeAuctionGoods isLike={isLike} />
       </div>
 
       <div className="flex flex-col flex-1 p-4">
@@ -67,7 +68,7 @@ export function AuctionGoodsListItem({
             </div>
             <div className="text-right">
               <p className="text-sm text-muted-foreground">입찰 수</p>
-              <p className="font-medium">{bids}회</p>
+              <p className="font-medium">{bidCount}회</p>
             </div>
           </div>
         </div>
@@ -79,14 +80,9 @@ export function AuctionGoodsListItem({
           </div>
 
           <div className="flex gap-2 w-full sm:w-auto">
-            <Link href={`/auction/${id}`} className="w-full sm:w-auto">
-              <Button variant="outline" size="sm" className="w-full">
+            <Link href={`/auction-goods/${id}`} className="w-full sm:w-auto">
+              <Button variant="default" size="sm" className="w-full">
                 상세 보기
-              </Button>
-            </Link>
-            <Link href={`/auction/${id}`} className="w-full sm:w-auto">
-              <Button size="sm" className="w-full">
-                입찰하기
               </Button>
             </Link>
           </div>

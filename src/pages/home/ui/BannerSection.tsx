@@ -34,12 +34,13 @@ export default function BannerSection() {
           </div>
           <div className="mx-auto w-full max-w-[500px] lg:max-w-none">
             <div className="aspect-video overflow-hidden rounded-xl bg-muted/50">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://placehold.co/1280x720"
                 alt="실시간 경매 플랫폼"
                 width={1280}
                 height={720}
-                className="object-cover w-full h-full"
+                className="object-cover w-full h-full hidden sm:block"
               />
             </div>
           </div>
