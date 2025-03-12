@@ -1,5 +1,3 @@
-import { Button } from '@/shared/ui';
-
 export default function HowToUseSection() {
   return (
     <section className="w-full py-12 md:py-16 lg:py-20 bg-muted/30">
@@ -11,7 +9,7 @@ export default function HowToUseSection() {
                 경매 이용 방법
               </h2>
               <p className="max-w-[600px] text-muted-foreground">
-                BidNow 플랫폼에서 경매에 참여하고 판매하는 방법을 알아보세요.
+                Auctify 에서 경매에 참여하고 판매하는 방법을 알아보세요.
               </p>
             </div>
             <div className="space-y-4">
@@ -22,7 +20,7 @@ export default function HowToUseSection() {
                 <div className="space-y-1">
                   <h3 className="font-medium">회원가입 및 로그인</h3>
                   <p className="text-sm text-muted-foreground">
-                    간단한 회원가입 절차를 통해 BidNow 계정을 만들고
+                    간단한 회원가입 절차를 통해 Auctify 계정을 만들고
                     로그인하세요.
                   </p>
                 </div>
@@ -62,15 +60,10 @@ export default function HowToUseSection() {
                 </div>
               </div>
             </div>
-            <div>
-              <Button className="gap-1">
-                자세히 알아보기
-                {/* <ChevronRight className="h-4 w-4" /> */}
-              </Button>
-            </div>
           </div>
           <div className="mx-auto w-full max-w-[500px] lg:max-w-none">
             <div className="aspect-video overflow-hidden rounded-xl bg-muted">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://placehold.co/1280x720"
                 alt="경매 이용 방법"
