@@ -124,17 +124,20 @@ function PriceRangeFilter({
     <AccordionItem value="priceRange">
       <AccordionTrigger>가격 범위</AccordionTrigger>
       <AccordionContent className="py-4 space-y-4">
-        <Slider
-          max={filter.priceRange.max}
-          step={10000}
-          value={Object.values(filter.priceRange)}
-          onValueChange={(value) =>
-            setFilter((prevFilter) => ({
-              ...prevFilter,
-              priceRange: { min: value[0], max: value[1] },
-            }))
-          }
-        />
+        {filter.priceRange.min !== null && filter.priceRange.max !== null && (
+          <Slider
+            max={filter.priceRange.max}
+            step={10000}
+            value={[filter.priceRange.min, filter.priceRange.max]}
+            onValueChange={(value) =>
+              setFilter((prevFilter) => ({
+                ...prevFilter,
+                priceRange: { min: value[0], max: value[1] },
+              }))
+            }
+          />
+        )}
+
         <div className="flex items-center justify-between">
           <div className="w-[45%]">
             <Label htmlFor="min-price" className="text-xs">
@@ -164,13 +167,13 @@ function PriceRangeFilter({
             <Input
               id="max-price"
               type="number"
-              value={filter.priceRange.max}
+              value={filter.priceRange.max ?? ''}
               onChange={(e) =>
                 setFilter((prevFilter) => ({
                   ...prevFilter,
                   priceRange: {
                     ...prevFilter.priceRange,
-                    max: Number(e.target.value),
+                    max: e.target.value ? Number(e.target.value) : null,
                   },
                 }))
               }
