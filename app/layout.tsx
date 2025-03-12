@@ -25,7 +25,11 @@ export default function RootLayout({
     <html lang="en">
       <body className="font-sans">
         <Header />
-        <Providers>{children}</Providers>
+        <div className="container mx-auto min-h-screen flex flex-col items-center justify-center">
+          <main className="w-full max-w-4xl p-6 bg-white shadow-lg rounded-lg">
+            <Providers>{children}</Providers>
+          </main>
+        </div>
       </body>
     </html>
   );
