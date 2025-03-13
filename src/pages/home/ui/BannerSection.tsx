@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { Badge, Button } from '@/shared/ui';
 
 export default function BannerSection() {
@@ -27,9 +29,11 @@ export default function BannerSection() {
               <Button size="lg" className="px-8">
                 경매 참여하기
               </Button>
-              <Button size="lg" variant="outline">
-                경매 등록하기
-              </Button>
+              <Link href="/auction-goods/register">
+                <Button size="lg" variant="outline">
+                  경매 등록하기
+                </Button>
+              </Link>
             </div>
           </div>
           <div className="mx-auto w-full max-w-[500px] lg:max-w-none">
