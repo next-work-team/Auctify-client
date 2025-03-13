@@ -3,7 +3,8 @@ import '@fontsource/pretendard';
 import '@fontsource/roboto';
 import '@/app/globals.css';
 
-import { Header } from '@/shared/ui/header/Header';
+// import { UnauthHeader } from '@/shared/ui/header/UnauthHeader';
+import { AuthHeader } from '@/shared/ui/header/AuthHeader';
 import Providers from '@/app/providers';
 
 export const metadata: Metadata = {
@@ -24,7 +25,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans">
-        <Header />
+        {/* <UnauthHeader /> */}
+        <AuthHeader />
         <div className="container mx-auto min-h-screen flex flex-col items-center justify-center">
           <main className="w-full max-w-4xl p-6 bg-white shadow-lg rounded-lg">
             <Providers>{children}</Providers>
