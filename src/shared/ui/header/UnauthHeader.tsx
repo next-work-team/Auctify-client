@@ -4,9 +4,9 @@ import AutifyLogo from '@icons/auctifyLogo32x32.svg';
 
 import { Search } from './Search';
 
-export function Header() {
+export function UnauthHeader() {
   return (
-    <header className="flex">
+    <header className="flex items-center">
       <div>
         <AutifyLogo width={32} height={32} />
       </div>
