@@ -87,12 +87,8 @@ export default function SigninPage() {
                     name="password" // name 속성을 전달
                     type="password"
                     validation={{ required: '비밀번호는 필수입니다.' }}
+                    placeholder="비밀번호를 입력해주세요"
                   />
-                  {methods.formState.errors.password && (
-                    <span className="text-red-500 text-sm">
-                      {methods.formState.errors.password.message}
-                    </span>
-                  )}
                 </div>
                 <Button
                   type="submit"
