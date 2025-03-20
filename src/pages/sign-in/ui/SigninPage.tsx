@@ -62,16 +62,11 @@ export default function SigninPage() {
                 <div className="space-y-2">
                   <Label htmlFor="email">이메일</Label>
                   <InputComponent
-                    name="email" // name 속성을 전달
+                    name="email"
                     type="email"
                     placeholder="name@example.com"
                     validation={{ required: '이메일은 필수입니다.' }}
                   />
-                  {methods.formState.errors.email && (
-                    <span className="text-red-500 text-sm">
-                      {methods.formState.errors.email.message}
-                    </span>
-                  )}
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
@@ -84,7 +79,7 @@ export default function SigninPage() {
                     </Link>
                   </div>
                   <InputComponent
-                    name="password" // name 속성을 전달
+                    name="password"
                     type="password"
                     validation={{ required: '비밀번호는 필수입니다.' }}
                     placeholder="비밀번호를 입력해주세요"
