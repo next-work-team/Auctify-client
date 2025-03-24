@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
-import { useState } from 'react';
-import { User, Mail, Phone, MapPin, Calendar, Edit } from 'lucide-react';
+import React, { useState } from 'react';
+import { User, Calendar, Edit } from 'lucide-react';
+import Image from 'next/image';
 
+import { useMypagUpdateStore } from '@/shared/store/profileStore';
 import { Button } from '@/shared/ui/Button';
 import { Input } from '@/shared/ui/input';
 import { Textarea } from '@/shared/ui/textarea';
@@ -17,29 +18,54 @@ import {
 } from '@/shared/ui/Card';
 
 export function ProfileSection() {
-  const [isEditing, setIsEditing] = useState(false);
-  const [preImage, setPrevImage] = useState(false);
-  const [saveImage, setSaveImage] = useState(false);
-  const [profile, setProfile] = useState({
-    name: '김민수',
-    email: '@google.com',
-    phone: '010-1234-5678',
-    address: '서울시~',
-    bio: '옷, 시계 팝니다~',
-    joinDate: '2025년 3월 17일',
+  const { mypageData, clickEditProfile, setProfileData } =
+    useMypagUpdateStore();
+  const { editProfile, nickName, bio, profileImageStr, birthdate } = mypageData;
+
+  // 임시 데이터 상태 관리
+  const [tempProfile, setTempProfile] = useState({
+    nickName,
+    bio,
+    profileImageStr,
+    birthdate,
   });
 
+  // 입력값 변경 핸들러
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
-    setProfile((prev) => ({ ...prev, [name]: value }));
+    setTempProfile((prev) => ({ ...prev, [name]: value }));
   };
 
+  // 프로필 수정 완료
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Save profile changes logic would go here
-    setIsEditing(false);
+    setProfileData(tempProfile); // 한 번만 업데이트
+    clickEditProfile();
+  };
+
+  // 이미지 변경 핸들러
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setTempProfile((prev) => ({
+          ...prev,
+          profileImageStr: reader.result as string,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // 수정 버튼 클릭 시 상태 변경 (취소 시 원래 값 복원)
+  const handleEditClick = () => {
+    if (editProfile) {
+      setTempProfile({ nickName, bio, profileImageStr, birthdate }); // 취소 시 원래 값으로 복원
+    }
+    clickEditProfile();
   };
 
   return (
@@ -48,11 +74,11 @@ export function ProfileSection() {
         <h2 className="text-2xl font-bold text-blue-700">프로필</h2>
         <Button
           variant="outline"
-          onClick={() => setIsEditing(!isEditing)}
+          onClick={handleEditClick}
           className="flex items-center gap-2"
         >
           <Edit className="h-4 w-4" />
-          {isEditing ? '취소' : '프로필 수정'}
+          {editProfile ? '취소' : '프로필 수정'}
         </Button>
       </div>
 
@@ -62,22 +88,29 @@ export function ProfileSection() {
             <div className="flex flex-col items-center space-y-4">
               <div className="relative">
                 <div className="h-32 w-32 overflow-hidden rounded-full bg-blue-100">
-                  <User className="h-full w-full p-6 text-blue-500" />
+                  {tempProfile.profileImageStr ? (
+                    <Image
+                      src={tempProfile.profileImageStr}
+                      alt="Profile Preview"
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <User className="h-full w-full p-6 text-blue-500" />
+                  )}
                 </div>
-                {isEditing && (
-                  <Button
-                    size="sm"
-                    className="absolute bottom-0 right-0 rounded-full"
-                  >
+                {editProfile && (
+                  <label className="absolute bottom-0 right-0 flex items-center justify-center p-[10px] h-8 bg-black text-white rounded-full cursor-pointer">
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                      className="hidden"
+                    />
                     변경
-                  </Button>
+                  </label>
                 )}
               </div>
-              <h3 className="text-xl font-medium">{profile.name}</h3>
-              <div className="flex items-center text-sm text-muted-foreground">
-                <Calendar className="mr-2 h-4 w-4" />
-                가입일: {profile.joinDate}
-              </div>
+              <h3 className="text-xl font-medium">{tempProfile.nickName}</h3>
             </div>
           </CardContent>
         </Card>
@@ -92,65 +125,37 @@ export function ProfileSection() {
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="name" className="flex items-center gap-2">
+                <Label htmlFor="nickName" className="flex items-center gap-2">
                   <User className="h-4 w-4" /> 닉네임
                 </Label>
-                {isEditing ? (
+                {editProfile ? (
                   <Input
-                    id="name"
-                    name="name"
-                    value={profile.name}
+                    id="nickName"
+                    name="nickName"
+                    value={tempProfile.nickName}
                     onChange={handleChange}
                   />
                 ) : (
                   <div className="rounded-md border border-input px-3 py-2">
-                    {profile.name}
+                    {tempProfile.nickName}
                   </div>
                 )}
               </div>
 
               <div className="space-y-2">
-                {/* 수정가능?? */}
-                <Label htmlFor="email" className="flex items-center gap-2">
-                  <Mail className="h-4 w-4" /> 이메일
+                <Label htmlFor="birthdate" className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4" /> 출생일
                 </Label>
-                <div className="rounded-md border border-input px-3 py-2 text-muted-foreground">
-                  {profile.email}
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="phone" className="flex items-center gap-2">
-                  <Phone className="h-4 w-4" /> 전화번호
-                </Label>
-                {isEditing ? (
+                {editProfile ? (
                   <Input
-                    id="phone"
-                    name="phone"
-                    value={profile.phone}
+                    id="birthdate"
+                    name="birthdate"
+                    value={tempProfile.birthdate}
                     onChange={handleChange}
                   />
                 ) : (
                   <div className="rounded-md border border-input px-3 py-2">
-                    {profile.phone}
-                  </div>
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="address" className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4" /> 주소
-                </Label>
-                {isEditing ? (
-                  <Input
-                    id="address"
-                    name="address"
-                    value={profile.address}
-                    onChange={handleChange}
-                  />
-                ) : (
-                  <div className="rounded-md border border-input px-3 py-2">
-                    {profile.address}
+                    {tempProfile.birthdate}
                   </div>
                 )}
               </div>
@@ -159,22 +164,22 @@ export function ProfileSection() {
                 <Label htmlFor="bio" className="flex items-center gap-2">
                   소개
                 </Label>
-                {isEditing ? (
+                {editProfile ? (
                   <Textarea
                     id="bio"
                     name="bio"
-                    value={profile.bio}
+                    value={tempProfile.bio}
                     onChange={handleChange}
                     rows={4}
                   />
                 ) : (
                   <div className="rounded-md border border-input px-3 py-2">
-                    {profile.bio}
+                    {tempProfile.bio}
                   </div>
                 )}
               </div>
 
-              {isEditing && (
+              {editProfile && (
                 <Button type="submit" className="w-full">
                   저장하기
                 </Button>

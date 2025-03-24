@@ -77,16 +77,16 @@ export default function ProfilePage() {
         return <ProfileSection />;
       case 'wishlist':
         return <WishListSection />;
+      case 'bidHistory':
+        return <BidHistorySection />;
       case 'myHistory':
         return <MyHistorySection />;
+      case 'shippingAddress':
+        return <ShippingAddressSection />;
       case 'temperature':
         return <TemperatureSection />;
       case 'notifications':
         return <NotificationSection />;
-      case 'shippingAddress':
-        return <ShippingAddressSection />;
-      case 'bidHistory':
-        return <BidHistorySection />;
       default:
         return <ProfileSection />;
     }

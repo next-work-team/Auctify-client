@@ -73,21 +73,6 @@ export function NotificationSection() {
     );
   };
 
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case 'bid':
-        return <span className="flex h-2 w-2 rounded-full bg-green-500" />;
-      case 'auction':
-        return <span className="flex h-2 w-2 rounded-full bg-yellow-500" />;
-      case 'message':
-        return <span className="flex h-2 w-2 rounded-full bg-blue-500" />;
-      case 'system':
-        return <span className="flex h-2 w-2 rounded-full bg-gray-500" />;
-      default:
-        return null;
-    }
-  };
-
   const unreadCount = notifications.filter((n) => !n.isRead).length;
 
   return (
@@ -103,14 +88,9 @@ export function NotificationSection() {
       </div>
 
       <Tabs defaultValue="all" className="w-full">
-        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-          <TabsList className="w-full sm:w-auto">
-            <TabsTrigger value="all">전체</TabsTrigger>
-            <TabsTrigger value="unread">읽지 않음</TabsTrigger>
-          </TabsList>
-
+        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center ">
           <Button
-            variant="outline"
+            variant="outline" //샤드씨엔 옵션
             size="sm"
             onClick={markAllAsRead}
             disabled={unreadCount === 0}
@@ -139,10 +119,7 @@ export function NotificationSection() {
                   }`}
                 >
                   <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-2">
-                      {getTypeIcon(notification.type)}
-                      <h3 className="font-medium">{notification.title}</h3>
-                    </div>
+                    <h3 className="font-medium">{notification.title}</h3>
                     <div className="flex items-center gap-2">
                       <span className="text-sm text-muted-foreground">
                         {notification.date}
@@ -156,7 +133,6 @@ export function NotificationSection() {
                             onClick={() => markAsRead(notification.id)}
                           >
                             <Check className="h-4 w-4" />
-                            <span className="sr-only">Mark as read</span>
                           </Button>
                         )}
                         <Button
@@ -166,7 +142,6 @@ export function NotificationSection() {
                           onClick={() => deleteNotification(notification.id)}
                         >
                           <Trash2 className="h-4 w-4" />
-                          <span className="sr-only">Delete</span>
                         </Button>
                       </div>
                     </div>
@@ -174,62 +149,6 @@ export function NotificationSection() {
                   <p className="mt-2 text-sm">{notification.message}</p>
                 </div>
               ))}
-            </div>
-          )}
-        </TabsContent>
-
-        <TabsContent value="unread" className="mt-4">
-          {unreadCount === 0 ? (
-            <div className="flex h-60 flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center">
-              <Check className="mb-4 h-12 w-12 text-muted-foreground" />
-              <h3 className="text-lg font-medium">읽지 않은 알림이 없습니다</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                모든 알림을 확인했습니다.
-              </p>
-            </div>
-          ) : (
-            <div className="space-y-2">
-              {notifications
-                .filter((notification) => !notification.isRead)
-                .map((notification) => (
-                  <div
-                    key={notification.id}
-                    className="rounded-lg border bg-blue-50 p-4"
-                  >
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center gap-2">
-                        {getTypeIcon(notification.type)}
-                        <h3 className="font-medium">{notification.title}</h3>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm text-muted-foreground">
-                          {notification.date}
-                        </span>
-                        <div className="flex gap-1">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8"
-                            onClick={() => markAsRead(notification.id)}
-                          >
-                            <Check className="h-4 w-4" />
-                            <span className="sr-only">Mark as read</span>
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 text-red-500 hover:text-red-700"
-                            onClick={() => deleteNotification(notification.id)}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                            <span className="sr-only">Delete</span>
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                    <p className="mt-2 text-sm">{notification.message}</p>
-                  </div>
-                ))}
             </div>
           )}
         </TabsContent>
