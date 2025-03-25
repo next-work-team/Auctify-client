@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useRef, useState, ChangeEvent, useEffect } from 'react';
 import { User, Calendar, Edit } from 'lucide-react';
 import Image from 'next/image';
+import axios from 'axios';
 
 import { useMypagUpdateStore } from '@/shared/store/profileStore';
 import { Button } from '@/shared/ui/Button';
@@ -18,54 +19,67 @@ import {
 } from '@/shared/ui/Card';
 
 export function ProfileSection() {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const { mypageData, clickEditProfile, setProfileData } =
     useMypagUpdateStore();
   const { editProfile, nickName, bio, profileImageStr, birthdate } = mypageData;
+  const [preview, setPreview] = useState<string>('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // 임시 데이터 상태 관리
-  const [tempProfile, setTempProfile] = useState({
-    nickName,
-    bio,
-    profileImageStr,
-    birthdate,
-  });
+  //프로필 가져오기
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/user`);
+        const data = response.data;
+        setProfileData({
+          profileImageStr: data.profileImageUrl,
+          nickName: data.nickname,
+          bio: data.bio,
+          birthdate: data.birthdate,
+        });
+      } catch (error) {
+        console.error('프로필 정보를 불러오지 못했습니다:', error);
+      }
+    };
 
-  // 입력값 변경 핸들러
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = e.target;
-    setTempProfile((prev) => ({ ...prev, [name]: value }));
+    fetchProfileData();
+  }, [apiUrl, setProfileData]);
+
+  //프로필 저장
+  const handleSaveProfile = async () => {
+    try {
+      const payload = {
+        profileImageStr: preview || profileImageStr,
+        nickName,
+        bio,
+        birthdate,
+      };
+
+      await axios.put(`${apiUrl}/user/`, payload);
+      clickEditProfile();
+      console.log('프로필 업데이트 성공');
+    } catch (error) {
+      console.error('프로필 업데이트 실패:', error);
+    }
   };
 
-  // 프로필 수정 완료
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setProfileData(tempProfile); // 한 번만 업데이트
-    clickEditProfile();
+  const handleButtonClick = () => {
+    fileInputRef.current?.click();
   };
 
-  // 이미지 변경 핸들러
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setTempProfile((prev) => ({
-          ...prev,
-          profileImageStr: reader.result as string,
-        }));
+        setProfileData({
+          profileImageStr: reader.result as string, // 프로필 이미지 업데이트
+        });
+        setPreview(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
-  };
-
-  // 수정 버튼 클릭 시 상태 변경 (취소 시 원래 값 복원)
-  const handleEditClick = () => {
-    if (editProfile) {
-      setTempProfile({ nickName, bio, profileImageStr, birthdate }); // 취소 시 원래 값으로 복원
-    }
-    clickEditProfile();
   };
 
   return (
@@ -74,7 +88,7 @@ export function ProfileSection() {
         <h2 className="text-2xl font-bold text-blue-700">프로필</h2>
         <Button
           variant="outline"
-          onClick={handleEditClick}
+          onClick={clickEditProfile}
           className="flex items-center gap-2"
         >
           <Edit className="h-4 w-4" />
@@ -88,18 +102,23 @@ export function ProfileSection() {
             <div className="flex flex-col items-center space-y-4">
               <div className="relative">
                 <div className="h-32 w-32 overflow-hidden rounded-full bg-blue-100">
-                  {tempProfile.profileImageStr ? (
+                  {preview || profileImageStr ? (
                     <Image
-                      src={tempProfile.profileImageStr}
+                      src={preview || profileImageStr || '/default-profile.png'}
                       alt="Profile Preview"
                       className="h-full w-full object-cover"
+                      width={128}
+                      height={128}
                     />
                   ) : (
                     <User className="h-full w-full p-6 text-blue-500" />
                   )}
                 </div>
                 {editProfile && (
-                  <label className="absolute bottom-0 right-0 flex items-center justify-center p-[10px] h-8 bg-black text-white rounded-full cursor-pointer">
+                  <button
+                    onClick={handleButtonClick}
+                    className="absolute bottom-0 right-0 flex items-center justify-center p-[10px] h-8 bg-black text-white rounded-full cursor-pointer"
+                  >
                     <Input
                       type="file"
                       accept="image/*"
@@ -107,10 +126,10 @@ export function ProfileSection() {
                       className="hidden"
                     />
                     변경
-                  </label>
+                  </button>
                 )}
               </div>
-              <h3 className="text-xl font-medium">{tempProfile.nickName}</h3>
+              <h3 className="text-xl font-medium">{nickName}</h3>
             </div>
           </CardContent>
         </Card>
@@ -123,66 +142,67 @@ export function ProfileSection() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="nickName" className="flex items-center gap-2">
-                  <User className="h-4 w-4" /> 닉네임
-                </Label>
-                {editProfile ? (
-                  <Input
-                    id="nickName"
-                    name="nickName"
-                    value={tempProfile.nickName}
-                    onChange={handleChange}
-                  />
-                ) : (
-                  <div className="rounded-md border border-input px-3 py-2">
-                    {tempProfile.nickName}
+            <form className="space-y-4">
+              {editProfile ? (
+                <>
+                  <div className="space-y-2">
+                    <Label
+                      htmlFor="nickName"
+                      className="flex items-center gap-2"
+                    >
+                      <User className="h-4 w-4" /> 닉네임
+                    </Label>
+                    <Input id="nickName" name="nickName" value={nickName} />
                   </div>
-                )}
-              </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="birthdate" className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4" /> 출생일
-                </Label>
-                {editProfile ? (
-                  <Input
-                    id="birthdate"
-                    name="birthdate"
-                    value={tempProfile.birthdate}
-                    onChange={handleChange}
-                  />
-                ) : (
-                  <div className="rounded-md border border-input px-3 py-2">
-                    {tempProfile.birthdate}
+                  <div className="space-y-2">
+                    <Label
+                      htmlFor="birthdate"
+                      className="flex items-center gap-2"
+                    >
+                      <Calendar className="h-4 w-4" /> 출생일
+                    </Label>
+                    <Input id="birthdate" name="birthdate" value={birthdate} />
                   </div>
-                )}
-              </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="bio" className="flex items-center gap-2">
-                  소개
-                </Label>
-                {editProfile ? (
-                  <Textarea
-                    id="bio"
-                    name="bio"
-                    value={tempProfile.bio}
-                    onChange={handleChange}
-                    rows={4}
-                  />
-                ) : (
-                  <div className="rounded-md border border-input px-3 py-2">
-                    {tempProfile.bio}
+                  <div className="space-y-2">
+                    <Label htmlFor="bio" className="flex items-center gap-2">
+                      소개
+                    </Label>
+                    <Textarea id="bio" name="bio" value={bio} rows={4} />
                   </div>
-                )}
-              </div>
 
-              {editProfile && (
-                <Button type="submit" className="w-full">
-                  저장하기
-                </Button>
+                  <Button onClick={handleSaveProfile} className="w-full">
+                    저장하기
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <div className="space-y-2">
+                    <Label className="flex items-center gap-2">
+                      <User className="h-4 w-4" /> 닉네임
+                    </Label>
+                    <div className="rounded-md border border-input px-3 py-2">
+                      {nickName}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="flex items-center gap-2">
+                      <Calendar className="h-4 w-4" /> 출생일
+                    </Label>
+                    <div className="rounded-md border border-input px-3 py-2">
+                      {birthdate}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="flex items-center gap-2">소개</Label>
+                    <div className="rounded-md border border-input px-3 py-2">
+                      {bio}
+                    </div>
+                  </div>
+                </>
               )}
             </form>
           </CardContent>
