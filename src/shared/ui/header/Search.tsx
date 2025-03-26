@@ -9,13 +9,7 @@ export function Search() {
   return (
     <FormProvider {...methods}>
       <div>
-        <div>
-          <InputComponent
-            name="search"
-            type="search"
-            placeholder="검색어 입력"
-          />
-        </div>
+        <InputComponent name="search" type="search" placeholder="검색어 입력" />
       </div>
     </FormProvider>
   );
