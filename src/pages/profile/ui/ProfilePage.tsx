@@ -31,7 +31,6 @@ type NavItem = {
 
 export default function ProfilePage() {
   const [activeSection, setActiveSection] = useState<string>('profile');
-  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   const navItems: NavItem[] = [
     {
@@ -94,22 +93,7 @@ export default function ProfilePage() {
 
   return (
     <div className="flex min-h-screen bg-blue-50">
-      {/* Mobile Navigation Toggle */}
-      <Button
-        variant="outline"
-        className="fixed top-4 left-4 z-40 md:hidden"
-        onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
-      >
-        {isMobileNavOpen ? '✕' : '≡'}
-      </Button>
-
-      {/* Sidebar Navigation */}
-      <div
-        className={cn(
-          'fixed inset-y-0 left-0 z-30 w-64 transform bg-white shadow-lg transition-transform duration-200 ease-in-out md:relative md:translate-x-0',
-          isMobileNavOpen ? 'translate-x-0' : '-translate-x-full',
-        )}
-      >
+      <div className="fixed inset-y-0 left-0 z-30 w-64 transform bg-white shadow-lg md:relative">
         <div className="flex h-20 items-center justify-center border-b">
           <h1 className="text-xl font-bold text-blue-700">마이페이지</h1>
         </div>
@@ -124,10 +108,7 @@ export default function ProfilePage() {
                   ? 'bg-blue-100 text-blue-700'
                   : 'text-gray-600 hover:bg-blue-50 hover:text-blue-700',
               )}
-              onClick={() => {
-                setActiveSection(item.section);
-                setIsMobileNavOpen(false);
-              }}
+              onClick={() => setActiveSection(item.section)}
             >
               {item.icon}
               {item.title}
@@ -135,8 +116,6 @@ export default function ProfilePage() {
           ))}
         </nav>
       </div>
-
-      {/* Main Content */}
       <div className="flex-1 p-4 md:p-8">
         <Card className="min-h-[calc(100vh-4rem)] p-6">{renderSection()}</Card>
       </div>

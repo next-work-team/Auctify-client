@@ -4,6 +4,7 @@ import React, { useRef, useState, ChangeEvent, useEffect } from 'react';
 import { User, Calendar, Edit } from 'lucide-react';
 import Image from 'next/image';
 import axios from 'axios';
+import { FormProvider, useForm } from 'react-hook-form';
 
 import { useMypagUpdateStore } from '@/shared/store/profileStore';
 import { Button } from '@/shared/ui/Button';
@@ -17,14 +18,27 @@ import {
   CardHeader,
   CardTitle,
 } from '@/shared/ui/Card';
+interface FormValues {
+  nickname: string;
+  bio: string;
+  birthdate: string;
+}
 
 export function ProfileSection() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const { mypageData, clickEditProfile, setProfileData } =
-    useMypagUpdateStore();
-  const { editProfile, nickName, bio, profileImageStr, birthdate } = mypageData;
-  const [preview, setPreview] = useState<string>('');
+  const {
+    mypageData: { editProfile, nickName, bio, birthdate, profileImageStr },
+    clickEditProfile,
+    setProfileData,
+  } = useMypagUpdateStore();
+  const [preview, setPreview] = useState<string | null>(null);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const methods = useForm<FormValues>({
+    mode: 'onBlur',
+    criteriaMode: 'all',
+  });
 
   //프로필 가져오기
   useEffect(() => {
@@ -49,18 +63,21 @@ export function ProfileSection() {
   //프로필 저장
   const handleSaveProfile = async () => {
     try {
+      //현재 상태 데이터 가져오기
+      const { mypageData } = useMypagUpdateStore.getState();
+      //서버로 보낼 데이터
       const payload = {
-        profileImageStr: preview || profileImageStr,
-        nickName,
-        bio,
-        birthdate,
+        profileImageStr: mypageData.profileImageStr,
+        nickName: mypageData.nickName,
+        bio: mypageData.bio,
+        birthdate: mypageData.birthdate,
       };
 
       await axios.put(`${apiUrl}/user/`, payload);
       clickEditProfile();
-      console.log('프로필 업데이트 성공');
+      console.log('프로필 수정 성공');
     } catch (error) {
-      console.error('프로필 업데이트 실패:', error);
+      console.error('프로필 수정 실패:', error);
     }
   };
 
@@ -104,7 +121,7 @@ export function ProfileSection() {
                 <div className="h-32 w-32 overflow-hidden rounded-full bg-blue-100">
                   {preview || profileImageStr ? (
                     <Image
-                      src={preview || profileImageStr || '/default-profile.png'}
+                      src={preview || profileImageStr || ''}
                       alt="Profile Preview"
                       className="h-full w-full object-cover"
                       width={128}
@@ -115,18 +132,20 @@ export function ProfileSection() {
                   )}
                 </div>
                 {editProfile && (
-                  <button
-                    onClick={handleButtonClick}
-                    className="absolute bottom-0 right-0 flex items-center justify-center p-[10px] h-8 bg-black text-white rounded-full cursor-pointer"
-                  >
-                    <Input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleImageChange}
-                      className="hidden"
-                    />
-                    변경
-                  </button>
+                  <FormProvider {...methods}>
+                    <button
+                      onClick={handleButtonClick}
+                      className="absolute bottom-0 right-0 flex items-center justify-center p-[10px] h-8 bg-black text-white rounded-full cursor-pointer"
+                    >
+                      <Input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className="hidden"
+                      />
+                      변경
+                    </button>
+                  </FormProvider>
                 )}
               </div>
               <h3 className="text-xl font-medium">{nickName}</h3>
@@ -152,7 +171,7 @@ export function ProfileSection() {
                     >
                       <User className="h-4 w-4" /> 닉네임
                     </Label>
-                    <Input id="nickName" name="nickName" value={nickName} />
+                    <Input id="nickName" name="nickName" />
                   </div>
 
                   <div className="space-y-2">
@@ -162,14 +181,14 @@ export function ProfileSection() {
                     >
                       <Calendar className="h-4 w-4" /> 출생일
                     </Label>
-                    <Input id="birthdate" name="birthdate" value={birthdate} />
+                    <Input id="birthdate" name="birthdate" />
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="bio" className="flex items-center gap-2">
                       소개
                     </Label>
-                    <Textarea id="bio" name="bio" value={bio} rows={4} />
+                    <Textarea id="bio" name="bio" rows={4} />
                   </div>
 
                   <Button onClick={handleSaveProfile} className="w-full">

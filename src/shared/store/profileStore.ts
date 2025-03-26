@@ -9,7 +9,7 @@ export const useMypagUpdateStore = create<ProfileState>((set) => ({
     bio: '',
     address: '',
     birthdate: '',
-    profileImageStr: null,
+    profileImageStr: '/icons/User.svg',
   },
   clickEditProfile: () =>
     set((state) => ({
