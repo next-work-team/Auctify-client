@@ -67,7 +67,7 @@ export function WishListSection() {
   useEffect(() => {
     const fetchWishList = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/user/myBid`);
+        const response = await axios.get(`${apiUrl}/user/myLikeGoods`);
         setWishlistItems(response.data);
       } catch (error) {
         console.error('데이터 불러오기 실패:', error);
