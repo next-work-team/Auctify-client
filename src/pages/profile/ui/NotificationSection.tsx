@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Bell, Check, Trash2 } from 'lucide-react';
 
 import { Button } from '@/shared/ui/Button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/Tabs';
+import { Tabs, TabsContent } from '@/shared/ui/Tabs';
 
 type Notification = {
   id: string;

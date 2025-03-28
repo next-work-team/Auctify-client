@@ -2,7 +2,6 @@ import { ExternalLink, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { setErrorMap } from 'zod';
 
 import { Card, CardContent, CardFooter } from '@/shared/ui/Card';
 import { Separator } from '@/shared/ui/separator';
