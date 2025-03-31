@@ -23,11 +23,11 @@ import { TemperatureSection } from './TemperatureSection';
 import { NotificationSection } from './NotificationSection';
 import { MyHistorySection } from './MyHistorySection';
 import { BidHistorySection } from './BidHistorySection';
-type NavItem = {
+interface NavItem {
   title: string;
   icon: React.ReactNode;
   section: string;
-};
+}
 
 export default function ProfilePage() {
   const [activeSection, setActiveSection] = useState<string>('profile');

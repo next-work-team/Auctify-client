@@ -7,14 +7,14 @@ import { Card, CardContent, CardFooter } from '@/shared/ui/Card';
 import { Separator } from '@/shared/ui/separator';
 import { Button } from '@/shared/ui/Button';
 
-type WishlistType = {
+interface WishlistType {
   id: string;
   title: string;
   price: string;
   endDate: string;
   image: string;
   status: 'active' | 'ended' | 'sold';
-};
+}
 
 export function WishListSection() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;

@@ -21,14 +21,14 @@ import {
   TableRow,
 } from '@/shared/ui/table';
 
-type BidItemTypes = {
+interface BidItemTypes {
   id: string;
   title: string;
   bidAmount: string;
   date: string;
   status: 'winning' | 'outbid' | 'won' | 'lost';
   auctionId: string;
-};
+}
 
 export function BidHistorySection() {
   const [filter, setFilter] = useState<string>('all');
