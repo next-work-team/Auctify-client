@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { ExternalLink, Edit, Trash2 } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 
 import { Button } from '@/shared/ui/Button';
 import { Card, CardContent, CardFooter } from '@/shared/ui/Card';
@@ -37,12 +37,7 @@ export function MyBidComponents({ auction }: { auction: AuctionItemType }) {
             판매완료
           </span>
         );
-      case 'draft':
-        return (
-          <span className="rounded-full bg-yellow-100 px-2 py-1 text-xs font-medium text-yellow-800">
-            임시저장
-          </span>
-        );
+
       default:
         return null;
     }
@@ -73,11 +68,7 @@ export function MyBidComponents({ auction }: { auction: AuctionItemType }) {
             <p className="font-bold text-blue-700">{auction.currentPrice}</p>
           </div>
         </div>
-        <div className="mt-2 flex justify-between">
-          <div>
-            <p className="text-sm text-muted-foreground">입찰수</p>
-            <p>{auction.bids}회</p>
-          </div>
+        <div className="mt-2 flex justify-end">
           <div className="text-right">
             <p className="text-sm text-muted-foreground">마감일</p>
             <p>{auction.endDate}</p>
@@ -85,21 +76,8 @@ export function MyBidComponents({ auction }: { auction: AuctionItemType }) {
         </div>
       </CardContent>
       <Separator />
-      <CardFooter className="flex justify-between p-4">
-        <Button variant="outline" size="sm" className="flex items-center gap-1">
-          <ExternalLink className="h-4 w-4" />
-          보기
-        </Button>
+      <CardFooter className="flex justify-end p-4">
         <div className="flex gap-2">
-          {auction.status === 'draft' && (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-blue-500 hover:text-blue-700"
-            >
-              <Edit className="h-4 w-4" />
-            </Button>
-          )}
           <Button
             variant="ghost"
             size="sm"

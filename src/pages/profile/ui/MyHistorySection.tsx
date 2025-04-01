@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BarChart4 } from 'lucide-react';
+import axios from 'axios';
 
-import { Button } from '@/shared/ui/Button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/Tabs';
 
 import { MyBidComponents } from './MyBidComponents';
@@ -18,8 +18,9 @@ interface AuctionItem {
 }
 
 export function MyHistorySection() {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [filter, setFilter] = useState<string>('all');
-
+  // const [auctionItems, setAuctionItems] = useState<AuctionItem[]>([]);
   const auctionItems: AuctionItem[] = [
     {
       id: '1',
@@ -27,7 +28,7 @@ export function MyHistorySection() {
       startPrice: '100,000원',
       currentPrice: '150,000원',
       endDate: '2023년 12월 20일',
-      image: '/placeholder.svg?height=200&width=200',
+      image: '',
       status: 'active',
       bids: 5,
     },
@@ -37,7 +38,7 @@ export function MyHistorySection() {
       startPrice: '800,000원',
       currentPrice: '950,000원',
       endDate: '2023년 12월 15일',
-      image: '/placeholder.svg?height=200&width=200',
+      image: '',
       status: 'active',
       bids: 8,
     },
@@ -47,7 +48,7 @@ export function MyHistorySection() {
       startPrice: '150,000원',
       currentPrice: '200,000원',
       endDate: '2023년 12월 1일',
-      image: '/placeholder.svg?height=200&width=200',
+      image: '',
       status: 'sold',
       bids: 12,
     },
@@ -56,12 +57,24 @@ export function MyHistorySection() {
       title: '미개봉 스니커즈',
       startPrice: '120,000원',
       currentPrice: '120,000원',
-      endDate: '미등록',
-      image: '/placeholder.svg?height=200&width=200',
-      status: 'draft',
+      endDate: '2023년 12월 1일',
+      image: '',
+      status: 'sold',
       bids: 0,
     },
   ];
+
+  // useEffect(() => {
+  //   const fetchAuctions = async () => {
+  //     try {
+  //       const response = await axios.get(`${apiUrl}/user/myBid`);
+  //       setAuctionItems(response.data);
+  //     } catch (error) {
+  //       console.error('Failed to fetch auction items', error);
+  //     }
+  //   };
+  //   fetchAuctions();
+  // }, []);
 
   const filteredAuctions =
     filter === 'all'
@@ -72,9 +85,6 @@ export function MyHistorySection() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-blue-700">내 경매 내역</h2>
-        <Button className="bg-blue-600 hover:bg-blue-700">
-          + 새 경매 등록
-        </Button>
       </div>
 
       <Tabs defaultValue="all" className="w-full">
@@ -91,9 +101,6 @@ export function MyHistorySection() {
             </TabsTrigger>
             <TabsTrigger value="sold" onClick={() => setFilter('sold')}>
               판매완료
-            </TabsTrigger>
-            <TabsTrigger value="draft" onClick={() => setFilter('draft')}>
-              임시저장
             </TabsTrigger>
           </TabsList>
         </div>
