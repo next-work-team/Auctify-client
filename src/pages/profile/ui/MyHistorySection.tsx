@@ -24,7 +24,7 @@ export function MyHistorySection() {
   const auctionItems: AuctionItem[] = [
     {
       id: '1',
-      title: '빈티지 시계',
+      title: '시계',
       startPrice: '100,000원',
       currentPrice: '150,000원',
       endDate: '2023년 12월 20일',
@@ -34,7 +34,7 @@ export function MyHistorySection() {
     },
     {
       id: '2',
-      title: '게이밍 노트북',
+      title: '랩탑',
       startPrice: '800,000원',
       currentPrice: '950,000원',
       endDate: '2023년 12월 15일',
@@ -54,7 +54,7 @@ export function MyHistorySection() {
     },
     {
       id: '4',
-      title: '미개봉 스니커즈',
+      title: '나이키',
       startPrice: '120,000원',
       currentPrice: '120,000원',
       endDate: '2023년 12월 1일',

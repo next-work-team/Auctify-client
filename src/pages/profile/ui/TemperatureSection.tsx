@@ -1,4 +1,4 @@
-import { ThermometerSun, Star, User } from 'lucide-react';
+import { ThermometerSun, User } from 'lucide-react';
 import Image from 'next/image';
 
 import { Separator } from '@/shared/ui/separator';
@@ -59,9 +59,6 @@ export function TemperatureSection() {
         <Card className="md:col-span-1">
           <CardHeader>
             <CardTitle>나의 온도</CardTitle>
-            <CardDescription>
-              거래 평가를 통해 산정된 온도입니다.
-            </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center justify-center space-y-4">
             <div

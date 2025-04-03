@@ -18,11 +18,10 @@ import { Button } from '@/shared/ui/Button';
 
 import { ProfileSection } from './ProfileSection';
 import { WishListSection } from './WishListSection';
-import { ShippingAddressSection } from './ShippingAddressSection';
+// import { ShippingAddressSection } from './ShippingAddressSection';
 import { TemperatureSection } from './TemperatureSection';
 import { NotificationSection } from './NotificationSection';
 import { MyHistorySection } from './MyHistorySection';
-import { BidHistorySection } from './BidHistorySection';
 interface NavItem {
   title: string;
   icon: React.ReactNode;
@@ -43,11 +42,7 @@ export default function ProfilePage() {
       icon: <Heart className="h-5 w-5" />,
       section: 'wishlist',
     },
-    {
-      title: '입찰/낙찰 내역',
-      icon: <Gavel className="h-5 w-5" />,
-      section: 'bidHistory',
-    },
+
     {
       title: '내 경매 내역',
       icon: <BarChart4 className="h-5 w-5" />,
@@ -76,12 +71,10 @@ export default function ProfilePage() {
         return <ProfileSection />;
       case 'wishlist':
         return <WishListSection />;
-      case 'bidHistory':
-        return <BidHistorySection />;
       case 'myHistory':
         return <MyHistorySection />;
-      case 'shippingAddress':
-        return <ShippingAddressSection />;
+      // case 'shippingAddress':
+      //   return <ShippingAddressSection />;
       case 'temperature':
         return <TemperatureSection />;
       case 'notifications':

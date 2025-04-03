@@ -1,13 +1,12 @@
 export interface User {
   id: string;
-  name: string;
-  email: string;
+  nickname: string;
+  profileImage: string;
 }
 
 export interface AuthStore {
-  isLogin: boolean; // 로그인 상태
   user: User | null;
-
-  login: (userData: User) => void;
-  logout: () => void;
+  isAuthenticated: boolean;
+  setUserState: (user: User) => void; // 유저 정보 업데이트
+  resetAuthState: () => void; // 인증 상태 초기화 (로그아웃)
 }

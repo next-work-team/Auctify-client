@@ -99,6 +99,20 @@ export function ProfileSection() {
     }
   };
 
+  const handleBirthdateChange = (e: ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, ''); // 숫자만 남김
+    if (value.length > 8) value = value.slice(0, 8); // 8자리 제한
+
+    if (value.length >= 4 && value.length < 6) {
+      value = value.slice(0, 4) + '-' + value.slice(4);
+    } else if (value.length >= 6) {
+      value =
+        value.slice(0, 4) + '-' + value.slice(4, 6) + '-' + value.slice(6);
+    }
+
+    setProfileData({ birthdate: value }); // 스토어 상태 업데이트
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -181,7 +195,12 @@ export function ProfileSection() {
                     >
                       <Calendar className="h-4 w-4" /> 출생일
                     </Label>
-                    <Input id="birthdate" name="birthdate" />
+                    <Input
+                      id="birthdate"
+                      name="birthdate"
+                      onChange={handleBirthdateChange}
+                      placeholder="YYYY-MM-DD"
+                    />
                   </div>
 
                   <div className="space-y-2">
