@@ -5,7 +5,6 @@ import { useState } from 'react';
 import {
   User,
   Heart,
-  Gavel,
   BarChart4,
   ThermometerSun,
   Bell,
@@ -19,7 +18,6 @@ import { Button } from '@/shared/ui/Button';
 import { ProfileSection } from './ProfileSection';
 import { WishListSection } from './WishListSection';
 // import { ShippingAddressSection } from './ShippingAddressSection';
-import { TemperatureSection } from './TemperatureSection';
 import { NotificationSection } from './NotificationSection';
 import { MyHistorySection } from './MyHistorySection';
 interface NavItem {
@@ -28,7 +26,7 @@ interface NavItem {
   section: string;
 }
 
-export default function ProfilePage() {
+export default function Mypage() {
   const [activeSection, setActiveSection] = useState<string>('profile');
 
   const navItems: NavItem[] = [
@@ -75,8 +73,6 @@ export default function ProfilePage() {
         return <MyHistorySection />;
       // case 'shippingAddress':
       //   return <ShippingAddressSection />;
-      case 'temperature':
-        return <TemperatureSection />;
       case 'notifications':
         return <NotificationSection />;
       default:
