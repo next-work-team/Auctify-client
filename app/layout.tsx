@@ -3,9 +3,8 @@ import '@fontsource/pretendard';
 import '@fontsource/roboto';
 import '@/app/globals.css';
 
-// import { UnauthHeader } from '@/shared/ui/header/UnauthHeader';
-import { AuthHeader } from '@/shared/ui/header/AuthHeader';
 import Providers from '@/app/providers';
+import Header from '@/shared/ui/header/Header';
 
 export const metadata: Metadata = {
   title: 'Auctify - 실시간 경매 플랫폼',
@@ -24,13 +23,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-sans">
-        {/* <UnauthHeader /> */}
-        <AuthHeader />
-        <div className="container mx-auto min-h-screen flex flex-col items-center justify-center">
-          <main className="w-full max-w-4xl p-6 bg-white shadow-lg rounded-lg">
-            <Providers>{children}</Providers>
-          </main>
+      <body className="font-sans flex flex-col">
+        <Header />
+        <div className="flex-1">
+          <Providers>{children}</Providers>
         </div>
       </body>
     </html>

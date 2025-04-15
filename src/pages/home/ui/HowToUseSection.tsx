@@ -1,7 +1,7 @@
 export default function HowToUseSection() {
   return (
     <section className="w-full py-12 md:py-16 lg:py-20 bg-muted/30">
-      <div className="container px-4 md:px-6">
+      <div className="container mx-auto">
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
           <div className="flex flex-col justify-center space-y-4">
             <div className="space-y-2">
@@ -61,7 +61,7 @@ export default function HowToUseSection() {
               </div>
             </div>
           </div>
-          <div className="mx-auto w-full max-w-[500px] lg:max-w-none">
+          <div className="mx-auto w-full max-w-[500px] lg:max-w-none hidden lg:block">
             <div className="aspect-video overflow-hidden rounded-xl bg-muted">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img

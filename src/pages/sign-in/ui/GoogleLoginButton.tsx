@@ -1,11 +1,17 @@
 'use client';
+import GoogleIcon from '@icons/google.svg';
 
-import React from 'react';
+import { Button } from '@/shared/ui';
 
 export default function GoogleLoginButton() {
   const handleLogin = () => {
     window.location.href = 'https://auctify.kro.kr/oauth2/authorization/google';
   };
 
-  return <button onClick={handleLogin}>구글 로그인</button>;
+  return (
+    <Button variant="outline" onClick={handleLogin} size="lg">
+      <GoogleIcon className="w-5 h-5" />
+      구글 로그인
+    </Button>
+  );
 }
