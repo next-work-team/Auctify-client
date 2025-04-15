@@ -1,5 +1,5 @@
 import { Button } from '@/shared/ui/Button';
-import { AuctionGoodsCard } from '@/entities/auction-goods';
+import { AuctionCard } from '@/entities/auctions';
 
 export default function ClosingSoonAuctionSection() {
   const auctionGoodsList = [
@@ -79,7 +79,7 @@ export default function ClosingSoonAuctionSection() {
 
   return (
     <section className="w-full py-12 md:py-16 lg:py-20">
-      <div className="container px-4 md:px-6">
+      <div className="container mx-auto">
         <div className="flex justify-between mb-8">
           <div>
             <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
@@ -100,10 +100,7 @@ export default function ClosingSoonAuctionSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {auctionGoodsList.map((auctionGoods) => (
-            <AuctionGoodsCard
-              key={auctionGoods.id}
-              auctionGoods={auctionGoods}
-            />
+            <AuctionCard key={auctionGoods.id} auction={auctionGoods} />
           ))}
         </div>
       </div>

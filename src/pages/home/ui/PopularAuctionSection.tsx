@@ -1,4 +1,4 @@
-import { AuctionGoodsCard } from '@/entities/auction-goods';
+import { AuctionCard } from '@/entities/auctions';
 import { Button } from '@/shared/ui';
 
 export default function PopularAuctionSection() {
@@ -55,7 +55,7 @@ export default function PopularAuctionSection() {
 
   return (
     <section className="w-full py-12 md:py-16 lg:py-20 bg-muted/30">
-      <div className="container px-4 md:px-6">
+      <div className="container mx-auto">
         <div className="flex justify-between mb-8">
           <div>
             <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
@@ -76,10 +76,7 @@ export default function PopularAuctionSection() {
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {auctionGoodsList.map((auctionGoods) => (
-            <AuctionGoodsCard
-              key={auctionGoods.id}
-              auctionGoods={auctionGoods}
-            />
+            <AuctionCard key={auctionGoods.id} auction={auctionGoods} />
           ))}
         </div>
       </div>

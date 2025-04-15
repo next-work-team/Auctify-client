@@ -5,7 +5,7 @@ import { Badge, Button } from '@/shared/ui';
 export default function BannerSection() {
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-muted/50 to-background">
-      <div className="container px-4 md:px-6">
+      <div className="container mx-auto">
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
           <div className="flex flex-col justify-center space-y-4">
             <div className="space-y-2">
@@ -36,7 +36,7 @@ export default function BannerSection() {
               </Link>
             </div>
           </div>
-          <div className="mx-auto w-full max-w-[500px] lg:max-w-none">
+          <div className="mx-auto w-full max-w-[500px] lg:max-w-none hidden lg:block">
             <div className="aspect-video overflow-hidden rounded-xl bg-muted/50">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -44,7 +44,7 @@ export default function BannerSection() {
                 alt="실시간 경매 플랫폼"
                 width={1280}
                 height={720}
-                className="object-cover w-full h-full hidden sm:block"
+                className="object-cover w-full h-full"
               />
             </div>
           </div>

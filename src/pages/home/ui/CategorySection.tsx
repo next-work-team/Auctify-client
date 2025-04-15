@@ -3,7 +3,7 @@ import { CategoryCard } from '@/entities/category';
 export default function CategorySection() {
   return (
     <section className="w-full py-12 md:py-16 lg:py-20">
-      <div className="container px-4 md:px-6">
+      <div className="container mx-auto">
         <div className="flex flex-col gap-2 mb-8">
           <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
             카테고리

@@ -6,7 +6,7 @@ import HowToUseSection from './HowToUseSection';
 
 export default function HomePage() {
   return (
-    <div className="mx-auto">
+    <>
       <BannerSection />
       {/* 마감 임박 경매 섹션 */}
       <ClosingSoonAuctionSection />
@@ -16,6 +16,6 @@ export default function HomePage() {
       <CategorySection />
       {/* 경매 이용 방법 섹션 */}
       <HowToUseSection />
-    </div>
+    </>
   );
 }
