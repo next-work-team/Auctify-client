@@ -63,7 +63,7 @@ export function ProfileEditForm({ profile, onSave, onCancel }: Props) {
                     src={preview}
                     alt="Preview"
                     className="object-cover"
-                    fill
+                    fill //width,height이랑 같이 쓰면 안됨
                   />
                 ) : (
                   <User className="h-full w-full p-6 text-blue-500" />

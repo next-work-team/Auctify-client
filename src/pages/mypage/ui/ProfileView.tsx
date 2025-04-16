@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { User, Calendar } from 'lucide-react';
 import Image from 'next/image';
 
@@ -21,6 +21,24 @@ interface Props {
 }
 
 export function ProfileView({ profile }: Props) {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+  const [temperature, setTemperature] = useState<number | null>(null);
+
+  useEffect(() => {
+    const fetchTemperature = async () => {
+      try {
+        const res = await fetch(`${apiUrl}/my/${profile.nickname}`);
+        const data = await res.json();
+        setTemperature(data.temperature);
+      } catch (err) {
+        console.error('온도 불러오기 실패:', err);
+      }
+    };
+
+    fetchTemperature();
+  }, [profile.nickname]);
+
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
       <Card className="md:col-span-1">
@@ -40,6 +58,20 @@ export function ProfileView({ profile }: Props) {
               )}
             </div>
             <h3 className="text-xl font-medium">{profile.nickname}</h3>
+            {temperature !== null ? (
+              <div className="flex flex-col items-center">
+                <span className="text-sm text-muted-foreground">
+                  사용자 온도
+                </span>
+                <div className="text-2xl font-semibold">
+                  {temperature.toFixed(1)}°C
+                </div>
+              </div>
+            ) : (
+              <span className="text-sm text-muted-foreground">
+                온도 불러오는 중...
+              </span>
+            )}
           </div>
         </CardContent>
       </Card>
