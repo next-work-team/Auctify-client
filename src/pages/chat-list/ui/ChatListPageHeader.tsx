@@ -5,7 +5,7 @@ export default function ChatListPageHeader() {
   return (
     <div className="mb-6">
       <Link
-        href="/profile"
+        href="/mypage"
         className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground"
       >
         <ArrowLeftIcon className="h-4 w-4" />
