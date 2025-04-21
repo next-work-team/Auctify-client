@@ -11,15 +11,16 @@ import {
   MapPinHouse,
 } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
 import { Card } from '@/shared/ui/Card';
 import { Button } from '@/shared/ui/Button';
+import { cn } from '@/shared/lib/utils';
 
 import { ProfileSection } from './ProfileSection';
 import { WishListSection } from './WishListSection';
 // import { ShippingAddressSection } from './ShippingAddressSection';
 import { NotificationSection } from './NotificationSection';
 import { MyHistorySection } from './MyHistorySection';
+
 interface NavItem {
   title: string;
   icon: React.ReactNode;

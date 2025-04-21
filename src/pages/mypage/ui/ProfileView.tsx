@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import { User, Calendar } from 'lucide-react';
 import Image from 'next/image';
@@ -28,7 +30,7 @@ export function ProfileView({ profile }: Props) {
   useEffect(() => {
     const fetchTemperature = async () => {
       try {
-        const res = await fetch(`${apiUrl}/my/${profile.nickname}`);
+        const res = await fetch(`${apiUrl}/my`);
         const data = await res.json();
         setTemperature(data.temperature);
       } catch (err) {
@@ -82,39 +84,34 @@ export function ProfileView({ profile }: Props) {
           <CardDescription>프로필 정보를 확인할 수 있습니다.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <ProfileInfo
-            label="닉네임"
-            icon={<User className="h-4 w-4" />}
-            value={profile.nickname}
-          />
-          <ProfileInfo
-            label="출생일"
-            icon={<Calendar className="h-4 w-4" />}
-            value={profile.birthdate}
-          />
-          <ProfileInfo label="소개" value={profile.bio} />
+          <div className="space-y-2">
+            <Label className="flex items-center gap-2">
+              <User className="h-4 w-4" />
+              닉네임
+            </Label>
+            <div className="rounded-md border border-input px-3 py-2">
+              {profile.nickname}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label className="flex items-center gap-2">
+              <Calendar className="h-4 w-4" />
+              출생일
+            </Label>
+            <div className="rounded-md border border-input px-3 py-2">
+              {profile.birthdate}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label>소개</Label>
+            <div className="rounded-md border border-input px-3 py-2">
+              {profile.bio}
+            </div>
+          </div>
         </CardContent>
       </Card>
-    </div>
-  );
-}
-
-function ProfileInfo({
-  label,
-  icon,
-  value,
-}: {
-  label: string;
-  icon?: React.ReactNode;
-  value: string;
-}) {
-  return (
-    <div className="space-y-2">
-      <Label className="flex items-center gap-2">
-        {icon}
-        {label}
-      </Label>
-      <div className="rounded-md border border-input px-3 py-2">{value}</div>
     </div>
   );
 }
