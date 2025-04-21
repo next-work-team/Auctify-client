@@ -5,7 +5,8 @@ import { Button } from '@/shared/ui';
 
 export default function GoogleLoginButton() {
   const handleLogin = () => {
-    window.location.href = 'https://auctify.kro.kr/oauth2/authorization/google';
+    window.location.href =
+      'https://api.auctify.shop/oauth2/authorization/google';
   };
 
   return (
