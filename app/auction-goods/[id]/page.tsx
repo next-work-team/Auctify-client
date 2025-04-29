@@ -1,4 +1,4 @@
-import { AuctionGoodsDetailPage } from '@/pages/auction-goods-detail';
+import { AuctionGoodsDetailPage } from '@/pages/auctions-detail';
 
 export default async function Page({
   params,
