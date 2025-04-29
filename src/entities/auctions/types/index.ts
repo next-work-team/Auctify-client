@@ -1,12 +1,12 @@
 export interface Auction {
-  id: string;
-  title: string;
-  currentBid: number;
-  image: string;
-  timeLeft: string;
-  bidCount: number;
-  category: string;
-  condition: string;
-  seller: string;
-  isLike: boolean;
+  goodsId: number;
+  goodsName: string;
+  goodsProcessStatus: 'AWARDED' | 'BIDDING' | 'CLOSED';
+  currentBidPrice: number;
+  imageUrls: string;
+  endTime: string;
+  category: 'ELECTRONICS' | 'FASHION' | 'BOOKS' | 'FURNITURE';
+  goodsStatus: 'NEW' | 'USED';
+  currentBidCount: number;
+  isLiked: boolean;
 }

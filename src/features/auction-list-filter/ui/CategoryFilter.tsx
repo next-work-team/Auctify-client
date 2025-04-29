@@ -1,5 +1,3 @@
-import React, { Dispatch, SetStateAction } from 'react';
-
 import {
   AccordionContent,
   AccordionItem,
@@ -8,16 +6,12 @@ import {
 import { Checkbox } from '@/shared/ui/Checkbox';
 import { Label } from '@/shared/ui/Label';
 
-import { CATEGORY_FILTER_OPTIONS } from '../../../pages/auctions-list/constants/filters';
-import { Filter } from '../../../pages/auctions-list/types';
+import { CATEGORY_FILTER_OPTIONS } from '../constants';
+import { useAuctionFilterStore } from '../store/useAuctionFilterStore';
 
-export default function CategoryFilter({
-  filter,
-  setFilter,
-}: {
-  filter: Filter;
-  setFilter: Dispatch<SetStateAction<Filter>>;
-}) {
+export default function CategoryFilter() {
+  const { filters, setFilter } = useAuctionFilterStore();
+
   return (
     <AccordionItem value="category">
       <AccordionTrigger>카테고리</AccordionTrigger>
@@ -26,16 +20,12 @@ export default function CategoryFilter({
           <div key={option.value} className="flex items-center space-x-2">
             <Checkbox
               id={option.value}
-              checked={filter.categories.includes(option.value)}
+              checked={filters.categories.includes(option.value)}
               onCheckedChange={(checked) => {
-                setFilter((prevFilter) => ({
-                  ...prevFilter,
-                  categories: checked
-                    ? [...prevFilter.categories, option.value]
-                    : prevFilter.categories.filter(
-                        (category) => category !== option.value,
-                      ),
-                }));
+                const updatedCategories = checked
+                  ? [...filters.categories, option.value]
+                  : filters.categories.filter((v) => v !== option.value);
+                setFilter('categories', updatedCategories);
               }}
             />
             <Label htmlFor={option.value} className="text-sm font-normal">

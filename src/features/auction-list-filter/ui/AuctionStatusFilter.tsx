@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
-
 import {
   AccordionContent,
   AccordionItem,
@@ -8,16 +6,12 @@ import {
 import { Checkbox } from '@/shared/ui/Checkbox';
 import { Label } from '@/shared/ui/Label';
 
-import { AUCTION_STATUS_FILTER_OPTIONS } from '../../../pages/auctions-list/constants/filters';
-import { Filter } from '../../../pages/auctions-list/types';
+import { AUCTION_STATUS_FILTER_OPTIONS } from '../constants';
+import { useAuctionFilterStore } from '../store/useAuctionFilterStore';
 
-function AuctionStatusFilter({
-  filter,
-  setFilter,
-}: {
-  filter: Filter;
-  setFilter: Dispatch<SetStateAction<Filter>>;
-}) {
+function AuctionStatusFilter() {
+  const { filters, setFilter } = useAuctionFilterStore();
+
   return (
     <AccordionItem value="status">
       <AccordionTrigger>경매 상태</AccordionTrigger>
@@ -26,16 +20,12 @@ function AuctionStatusFilter({
           <div key={option.value} className="flex items-center space-x-2">
             <Checkbox
               id={option.value}
-              checked={filter.auctionStatus.includes(option.value)}
+              checked={filters.status.includes(option.value)}
               onCheckedChange={(checked) => {
-                setFilter((prevFilter) => ({
-                  ...prevFilter,
-                  auctionStatus: checked
-                    ? [...prevFilter.auctionStatus, option.value]
-                    : prevFilter.auctionStatus.filter(
-                        (statusItem) => statusItem !== option.value,
-                      ),
-                }));
+                const updatedStatus = checked
+                  ? [...filters.status, option.value]
+                  : filters.status.filter((v) => v !== option.value);
+                setFilter('status', updatedStatus);
               }}
             />
             <Label htmlFor={option.value} className="text-sm font-normal">

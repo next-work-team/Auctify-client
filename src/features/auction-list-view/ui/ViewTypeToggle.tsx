@@ -1,17 +1,14 @@
+'use client';
+
 import { Grid, List } from 'lucide-react';
-import { Dispatch, SetStateAction } from 'react';
 
 import { Tabs, TabsList, TabsTrigger } from '@/shared/ui';
 
-import { ViewType } from '../types';
+import { useViewTypeStore, ViewType } from '../store/useViewTypeStore';
 
-export default function GirdListToggle({
-  viewType,
-  setViewType,
-}: {
-  viewType: ViewType;
-  setViewType: Dispatch<SetStateAction<ViewType>>;
-}) {
+export default function GirdListToggle() {
+  const { viewType, setViewType } = useViewTypeStore();
+
   return (
     <Tabs
       value={viewType}

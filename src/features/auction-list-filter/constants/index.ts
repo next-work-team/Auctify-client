@@ -17,6 +17,7 @@ export const CATEGORY_FILTER_OPTIONS_MAP = {
   home: '홈/리빙',
   sports: '스포츠/레저',
 };
+export type CategoryKey = keyof typeof CATEGORY_FILTER_OPTIONS_MAP;
 
 export const CONDITION_FILTER_OPTIONS = [
   { label: '새 상품', value: 'new' },

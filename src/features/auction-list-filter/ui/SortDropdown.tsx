@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+'use client';
 
 import {
   Select,
@@ -8,17 +8,16 @@ import {
   SelectValue,
 } from '@/shared/ui/Select';
 
-import { SortingMethod } from '../../../pages/auctions-list/types/index';
+import { useAuctionFilterStore } from '../store/useAuctionFilterStore';
 
-export default function SortDropdown({
-  setSortingMethod,
-}: {
-  setSortingMethod: Dispatch<SetStateAction<SortingMethod>>;
-}) {
+export default function SortDropdown() {
+  const { filters, setFilter } = useAuctionFilterStore();
+
   return (
     <Select
       defaultValue="ending-soon"
-      onValueChange={(value) => setSortingMethod(value as SortingMethod)}
+      value={filters.sort}
+      onValueChange={(value) => setFilter('sort', value as typeof filters.sort)}
     >
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="정렬 기준" />

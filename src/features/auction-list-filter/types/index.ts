@@ -22,21 +22,6 @@ export interface Filter {
   auctionStatus: AuctionStatus[];
 }
 
-export interface Auction {
-  id: string;
-  title: string;
-  currentBid: number;
-  image: string;
-  timeLeft: string;
-  bidCount: number;
-  category: string;
-  condition: string;
-  seller: string;
-  isLike: boolean;
-}
-
-export type ViewType = 'grid' | 'list';
-
 export type SortingMethod =
   | 'ending-soon'
   | 'newest'
