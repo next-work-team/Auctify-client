@@ -5,8 +5,9 @@ import { Button } from '@/shared/ui/button';
 import { Card, CardContent, CardFooter } from '@/shared/ui/Card';
 import { ROUTES } from '@/shared/constants';
 
-import LikeAuctionGoods from './LikeAuctionGoods';
 import { Auction } from '../types';
+
+import LikeAuctionGoods from './LikeAuctionGoods';
 
 export function AuctionCard({
   auction: {
