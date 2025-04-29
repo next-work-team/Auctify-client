@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Clock } from 'lucide-react';
 
-import { Button } from '@shared/ui/button';
+import { Button } from '@/shared/ui/Button';
 import { Auction } from '@entities/auctions/types';
 import LikeAuctionGoods from '@entities/auctions/ui/LikeAuctionGoods';
 import { ROUTES } from '@/shared/constants';

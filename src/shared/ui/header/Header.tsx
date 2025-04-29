@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import { ROUTES } from '@shared/constants';
-import { Button } from '@shared/ui/Button';
+import { Button } from '@/shared/ui/Button';
 import { Avatar, AvatarFallback, AvatarImage } from '@shared/ui/avatar';
 
 function Header() {

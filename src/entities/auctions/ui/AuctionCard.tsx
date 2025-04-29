@@ -1,7 +1,7 @@
 import { Clock } from 'lucide-react';
 import Link from 'next/link';
 
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/shared/ui/Button';
 import { Card, CardContent, CardFooter } from '@/shared/ui/Card';
 import { ROUTES } from '@/shared/constants';
 
