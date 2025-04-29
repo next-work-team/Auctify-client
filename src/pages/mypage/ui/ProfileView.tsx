@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { use } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { User, Calendar } from 'lucide-react';
 import Image from 'next/image';
 
@@ -12,6 +13,9 @@ import {
   CardDescription,
 } from '@/shared/ui/Card';
 import { Label } from '@/shared/ui/Label';
+import { useAuthStore } from '@/shared/store/useAuthStore';
+
+import fetchTemperature from '../apis/fetchTemperatureApi';
 
 interface Props {
   profile: {
@@ -23,23 +27,17 @@ interface Props {
 }
 
 export function ProfileView({ profile }: Props) {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL!;
+  const { user } = useAuthStore();
 
-  const [temperature, setTemperature] = useState<number | null>(null);
-
-  useEffect(() => {
-    const fetchTemperature = async () => {
-      try {
-        const res = await fetch(`${apiUrl}/my`);
-        const data = await res.json();
-        setTemperature(data.temperature);
-      } catch (err) {
-        console.error('온도 불러오기 실패:', err);
-      }
-    };
-
-    fetchTemperature();
-  }, [profile.nickname]);
+  const {
+    data: temperature,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['userTemperature', user?.userId], // 의존성
+    queryFn: () => fetchTemperature(apiUrl),
+  });
 
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -60,19 +58,21 @@ export function ProfileView({ profile }: Props) {
               )}
             </div>
             <h3 className="text-xl font-medium">{profile.nickname}</h3>
-            {temperature !== null ? (
+            {isLoading ? (
+              <span className="text-sm text-muted-foreground">
+                온도 불러오는 중...
+              </span>
+            ) : isError || temperature === null ? (
+              <span className="text-sm text-red-500">온도 정보 없음</span>
+            ) : (
               <div className="flex flex-col items-center">
                 <span className="text-sm text-muted-foreground">
                   사용자 온도
                 </span>
                 <div className="text-2xl font-semibold">
-                  {temperature.toFixed(1)}°C
+                  {temperature?.toFixed(1)}°C
                 </div>
               </div>
-            ) : (
-              <span className="text-sm text-muted-foreground">
-                온도 불러오는 중...
-              </span>
             )}
           </div>
         </CardContent>
