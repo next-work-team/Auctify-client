@@ -6,10 +6,10 @@ export const ROUTES = {
   },
   AUCTIONS: {
     ROOT: '/auctions',
-    DETAIL: (id: string) => `/auctions/${id}`,
+    DETAIL: (id: number) => `/auctions/${id}`,
     REGISTER: '/auctions/register',
-    EDIT: (id: string) => `/auctions/${id}`,
-    WIN: (id: string) => `/auctions/${id}`,
+    EDIT: (id: number) => `/auctions/${id}`,
+    WIN: (id: number) => `/auctions/${id}`,
   },
   SIGN_IN: 'sign-in',
   PROFILE: {
