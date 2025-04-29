@@ -1,60 +1,90 @@
-import React, { Dispatch, SetStateAction } from 'react';
+'use client';
 
 import { Button } from '@/shared/ui';
 
-import { Filter } from '../../../pages/auctions-list/types/index';
 import {
   AUCTION_STATUS_FILTER_OPTIONS_MAP,
   CATEGORY_FILTER_OPTIONS_MAP,
   CONDITION_FILTER_OPTIONS_MAP,
-} from '../../../pages/auctions-list/constants/filters';
-import { defaultFilter } from '../../../pages/auctions-list/ui/AuctionListPage';
+} from '../constants';
+import { useAuctionFilterStore } from '../store/useAuctionFilterStore';
 
-export default function ActiveFilterSection({
-  filter,
-  setFilter,
-}: {
-  filter: Filter;
-  setFilter: Dispatch<SetStateAction<Filter>>;
-}) {
-  // filter -> []
+export default function ActiveFilterSection() {
+  const { filters, resetFilter, setFilter } = useAuctionFilterStore();
+
+  // active 필터 항목 구성
   const activeFilters = [
-    ...filter.categories.map(
-      (value) => `${CATEGORY_FILTER_OPTIONS_MAP[value]}`,
-    ),
-    ...filter.condition.map(
-      (value) => `${CONDITION_FILTER_OPTIONS_MAP[value]}`,
-    ),
-    ...filter.auctionStatus.map(
-      (value) => `${AUCTION_STATUS_FILTER_OPTIONS_MAP[value]}`,
-    ),
-    `가격 범위: ${filter.priceRange.min.toLocaleString()} ~ ${filter.priceRange.max === null ? '제한 없음' : filter.priceRange.max.toLocaleString()}`,
+    ...filters.categories.map((value) => ({
+      key: 'categories' as const,
+      value,
+      label:
+        CATEGORY_FILTER_OPTIONS_MAP[
+          value as keyof typeof CATEGORY_FILTER_OPTIONS_MAP
+        ],
+    })),
+    ...filters.condition.map((value) => ({
+      key: 'condition' as const,
+      value,
+      label:
+        CONDITION_FILTER_OPTIONS_MAP[
+          value as keyof typeof CONDITION_FILTER_OPTIONS_MAP
+        ],
+    })),
+    ...filters.status.map((value) => ({
+      key: 'status' as const,
+      value,
+      label:
+        AUCTION_STATUS_FILTER_OPTIONS_MAP[
+          value as keyof typeof AUCTION_STATUS_FILTER_OPTIONS_MAP
+        ],
+    })),
+    ...(filters.priceRange.min !== 0 || filters.priceRange.max !== null
+      ? [
+          {
+            key: 'priceRange' as const,
+            value: 'priceRange',
+            label: `가격 범위: ${filters.priceRange.min.toLocaleString()} ~ ${filters.priceRange.max === null ? '제한 없음' : filters.priceRange.max.toLocaleString()}`,
+          },
+        ]
+      : []),
   ];
-
-  console.log(activeFilters);
 
   return (
     <div className="bg-muted/40 p-3 rounded-lg">
-      <div className="flex flex-wrap gap-2">
-        {activeFilters.map((activeFilter) => (
-          <div
-            key={activeFilter}
-            className="bg-background text-sm px-3 py-1 rounded-full flex items-center"
-          >
-            {activeFilter}
-            <button className="ml-1 text-muted-foreground hover:text-foreground">
-              ×
-            </button>
-          </div>
-        ))}
+      <div className="flex justify-between">
+        <div className="flex flex-wrap gap-2">
+          {activeFilters.map((filter) => (
+            <div
+              key={`${filter.key}-${filter.value}`}
+              className="bg-background text-sm px-3 py-1 rounded-full flex items-center"
+            >
+              {filter.label}
+              <button
+                className="ml-1 text-muted-foreground hover:text-foreground"
+                onClick={() => {
+                  if (filter.key === 'priceRange') {
+                    setFilter('priceRange', { min: 0, max: null });
+                  } else {
+                    setFilter(
+                      filter.key,
+                      filters[filter.key].filter(
+                        (item) => item !== filter.value,
+                      ),
+                    );
+                  }
+                }}
+              >
+                ×
+              </button>
+            </div>
+          ))}
+        </div>
 
         <Button
           variant="link"
           size="sm"
           className="text-xs h-auto p-0"
-          onClick={() => {
-            setFilter(defaultFilter);
-          }}
+          onClick={resetFilter}
         >
           필터 초기화
         </Button>
