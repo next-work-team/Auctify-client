@@ -21,7 +21,7 @@
     ],
 
     // Import Alias 설정
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "@icons/*": ["/public/icons/*"],

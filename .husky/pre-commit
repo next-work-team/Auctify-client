@@ -1,0 +1,30 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo ""
+echo "🔍 커밋 전 검사 시작..."
+
+# 🔧 lint-staged 실행
+echo ""
+echo "🧹 린트 및 포맷 검사 중..."
+npx lint-staged
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "❌ 커밋 실패: lint-staged 오류 발생!"
+  echo "💡 'npx lint-staged' 명령어로 오류를 직접 확인하세요."
+  exit 1
+fi
+
+# 🧠 타입스크립트 체크
+echo ""
+echo "🔍 타입스크립트 타입 검사 중..."
+npx tsc --noEmit --pretty
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "❌ 커밋 실패: 타입스크립트 에러 발생!"
+  echo "💡 'npx tsc --noEmit --pretty' 명령어로 타입 오류를 직접 확인하세요."
+  exit 1
+fi
+
+echo ""
+echo "✅ 커밋 검사 통과! 이제 커밋됩니다 🎉"

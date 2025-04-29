@@ -8,7 +8,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write \"src/**/*.{js,ts,jsx,tsx,json,html}\""
+    "format": "prettier --write \"src/**/*.{js,ts,jsx,tsx,json,html}\"",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@fontsource/pretendard": "^5.1.0",
@@ -62,6 +69,8 @@
     "eslint": "^9",
     "eslint-config-next": "15.1.7",
     "eslint-config-prettier": "^10.0.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.1",
     "postcss": "^8.5.2",
     "prettier": "^3.5.1",
     "tailwindcss": "^3.4.17",
