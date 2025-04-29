@@ -35,8 +35,6 @@ export interface AuctionGoods {
   isLike: boolean;
 }
 
-export type ViewType = 'grid' | 'list';
-
 export type SortingMethod =
   | 'ending-soon'
   | 'newest'
