@@ -6,8 +6,6 @@ import { Check, Clock, Package, CreditCard } from 'lucide-react';
 import { Button, CardContent } from '@/shared/ui';
 import { Card } from '@/shared/ui';
 
-import HomeNavLink from '../../auctions-detail/ui/HomeNavLink';
-
 /**
  * 낙찰 완료 페이지 컴포넌트
  * @param params - 경매 상품 ID를 포함하는 객체
@@ -42,8 +40,6 @@ export function AuctionsWinPage({ params }: { params: { id: string } }) {
 
   return (
     <div className="container py-6 md:py-10">
-      <HomeNavLink />
-
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">경매 낙찰 완료</h1>
         <p className="text-muted-foreground">

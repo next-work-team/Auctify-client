@@ -1,4 +1,4 @@
-export default function AuctionsImageGallerySection({
+export default function AuctionImageGallery({
   images,
   title,
 }: {
