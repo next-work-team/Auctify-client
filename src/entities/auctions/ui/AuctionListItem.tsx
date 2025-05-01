@@ -3,8 +3,8 @@ import { Clock } from 'lucide-react';
 
 import { Button } from '@/shared/ui/Button';
 import { Auction } from '@entities/auctions/types';
-import LikeAuctionGoods from '@entities/auctions/ui/LikeAuctionGoods';
 import { ROUTES } from '@/shared/constants';
+import LikeAuctionButton from '@/features/auction-like/ui/LikeAuctionIcon';
 
 export function AuctionListItem({
   auction: {
@@ -42,7 +42,7 @@ export function AuctionListItem({
             </div>
           )}
         </div>
-        <LikeAuctionGoods isLike={isLiked} />
+        <LikeAuctionButton isLike={isLiked} goodsId={goodsId} />
       </div>
 
       <div className="flex flex-col flex-1 p-4">

@@ -7,7 +7,7 @@ export default function BidHistorySection({
 }) {
   return (
     <Card>
-      <CardContent className="p-6">
+      <CardContent>
         <h3 className="font-semibold mb-4">입찰 기록</h3>
         <div className="space-y-3">
           {bidHistory.map((bid, index) => (

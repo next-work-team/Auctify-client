@@ -2,7 +2,7 @@ import { MessageSquare } from 'lucide-react';
 
 import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui';
 
-export default function AuctionsDescriptionSection({
+export default function AuctionDetailInfo({
   description,
   seller,
 }: {

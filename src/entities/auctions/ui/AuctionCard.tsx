@@ -4,10 +4,9 @@ import Link from 'next/link';
 import { Button } from '@/shared/ui/Button';
 import { Card, CardContent, CardFooter } from '@/shared/ui/Card';
 import { ROUTES } from '@/shared/constants';
+import LikeAuctionIcon from '@/features/auction-like/ui/LikeAuctionIcon';
 
 import { Auction } from '../types';
-
-import LikeAuctionGoods from './LikeAuctionGoods';
 
 export function AuctionCard({
   auction: {
@@ -34,7 +33,7 @@ export function AuctionCard({
         height={300}
         className="object-cover w-full aspect-[4/3]"
       />
-      <LikeAuctionGoods isLike={isLiked} />
+      <LikeAuctionIcon isLike={isLiked} goodsId={goodsId} />
       <div className="absolute left-2 top-2 flex gap-x-2">
         {category && (
           <div className="bg-background/80 backdrop-blur-sm text-xs px-2 py-1 rounded">
