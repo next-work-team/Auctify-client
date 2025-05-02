@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 import { useMeQuery } from '@/pages/sign-in/hooks/useMeQuery';
 import { useAuthStore } from '@/pages/sign-in/store/authStore';
+import { useSSE } from '@/shared/hooks/useSSE';
 
 /**
  * AppInitializer
@@ -16,9 +17,11 @@ import { useAuthStore } from '@/pages/sign-in/store/authStore';
  * UI는 렌더링하지 않으며, 사이드 이펙트 전용입니다.
  */
 export function AppInitializer() {
-  const { data: user, isLoading } = useMeQuery();
+  const { data: user } = useMeQuery();
   console.log('🚀 ~ AppInitializer ~ user:', user);
   const { setUser, clearUser } = useAuthStore();
+
+  useSSE();
 
   useEffect(() => {
     if (user) setUser(user);

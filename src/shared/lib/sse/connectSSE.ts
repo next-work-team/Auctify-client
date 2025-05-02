@@ -1,7 +1,7 @@
 'use client';
 import { useAuthStore } from '@/shared/store/useAuthStore';
 
-const connectSSE = () => {
+export const connectSSE = () => {
   const userId = useAuthStore.getState().user?.id;
 
   if (!userId) {
