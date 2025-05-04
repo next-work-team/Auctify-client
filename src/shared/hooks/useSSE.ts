@@ -8,6 +8,7 @@ export const useSSE = () => {
   const isConnected = useRef(false);
 
   useEffect(() => {
+    //중복 연결 방지
     if (userId && !isConnected.current) {
       connectSSE();
       isConnected.current = true;
