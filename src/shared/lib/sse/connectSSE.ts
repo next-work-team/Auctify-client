@@ -1,15 +1,9 @@
 'use client';
-import { useAuthStore } from '@/shared/store/useAuthStore';
 
 export const connectSSE = () => {
-  const userId = useAuthStore.getState().user?.id;
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  if (!userId) {
-    console.warn('SSE 연결 실패: userId 없음');
-    return;
-  }
-
-  const eventSource = new EventSource(`/sse/notifications?userId=${userId}`);
+  const eventSource = new EventSource(`${apiUrl}/sse/subscribe`);
 
   // 서버에서 메시지가 오면 실행됨
   eventSource.onmessage = (event) => {
