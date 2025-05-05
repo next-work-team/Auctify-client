@@ -4,7 +4,7 @@ import { useAuthStore } from '@/shared/store/useAuthStore';
 import { connectSSE } from '@/shared/lib/sse/connectSSE';
 
 export const useSSE = () => {
-  const userId = useAuthStore((state) => state.user?.id);
+  const userId = useAuthStore((state) => state.user?.userId);
   const isConnected = useRef(false);
 
   useEffect(() => {
