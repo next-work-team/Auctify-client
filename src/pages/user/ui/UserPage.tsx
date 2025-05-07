@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { User, Calendar } from 'lucide-react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
 
 import {
   Card,
@@ -13,59 +14,37 @@ import {
 } from '@/shared/ui/Card';
 import { Label } from '@/shared/ui/Label';
 
+import fetchUserProfileApi from '../apis/FetchUserProfileApi';
+
 export function UserPage() {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL as string;
   const params = useParams();
   const userId = params?.userId as string | undefined;
-  // const [profile, setProfile] = useState<{
-  //   nickname: string;
-  //   bio: string;
-  //   birthdate: string;
-  //   image: string | null;
-  //   temperature: number | null;
-  // }>({
-  //   nickname: '테스트유저',
-  //   bio: '안녕하세요! 저는 테스트 유저입니다.',
-  //   birthdate: '1995-08-15',
-  //   image: null,
-  //   temperature: 36.5,
-  // });
-  const [profile, setProfile] = useState<{
-    nickname: string;
-    bio: string;
-    birthdate: string;
-    image: string | null;
-    temperature: number | null;
-  } | null>(null);
 
-  useEffect(() => {
-    if (!userId) return;
-    const fetchProfile = async () => {
-      try {
-        const res = await fetch(`${apiUrl}/user/${userId}`);
-        const data = await res.json();
-        setProfile({
-          nickname: data.data.nickName,
-          bio: data.data.bio ?? '소개 없음',
-          birthdate: data.data.birthdate,
-          image: data.data.profileImage,
-          temperature: data.data.mannerTemperature,
-        });
-      } catch (err) {
-        console.error('프로필 불러오기 실패:', err);
-      }
-    };
-
-    fetchProfile();
-  }, [userId]);
-
-  if (!profile) {
+  const {
+    data: profile,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['userProfile', userId],
+    queryFn: () => fetchUserProfileApi(apiUrl, userId!),
+  });
+  if (isLoading) {
     return (
       <div className="text-center py-10 text-muted-foreground">
         프로필 불러오는 중...
       </div>
     );
   }
+
+  if (isError || !profile) {
+    return (
+      <div className="text-center py-10 text-red-500">
+        프로필 정보를 불러오는 데 실패했습니다.
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
       <Card className="md:col-span-1">
