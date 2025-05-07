@@ -4,7 +4,7 @@ import { Trash2 } from 'lucide-react';
 import { Button } from '@/shared/ui/Button';
 import { Card, CardContent, CardFooter } from '@/shared/ui/Card';
 import { Separator } from '@/shared/ui/separator';
-
+import { AuctionCard } from '@/entities/auctions';
 interface AuctionItemType {
   id: string;
   title: string;
