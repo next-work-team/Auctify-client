@@ -19,22 +19,34 @@ interface AuctionItemType {
 export function MyBidComponents({ auction }: { auction: AuctionItemType }) {
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case 'active':
+      case 'all':
         return (
           <span className="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800">
+            전체
+          </span>
+        );
+      case 'active':
+        return (
+          <span className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-800">
             진행중
           </span>
         );
-      case 'ended':
+      case 'pending':
         return (
-          <span className="rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-800">
-            종료됨
+          <span className="rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800">
+            결제 대기
           </span>
         );
       case 'sold':
         return (
           <span className="rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800">
-            판매완료
+            판매 완료
+          </span>
+        );
+      case 'ended':
+        return (
+          <span className="rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800">
+            종료됨
           </span>
         );
 
