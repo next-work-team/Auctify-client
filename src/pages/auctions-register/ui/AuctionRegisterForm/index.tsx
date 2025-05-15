@@ -4,11 +4,13 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react';
 
 import { Button, Tabs, TabsList, TabsTrigger } from '@/shared/ui';
 import { Form } from '@/shared/ui/form';
 
 import { auctionRegisterFormSchema } from '../../schemas/AuctionRegisterForm.schema';
+import { useRegisterAuctionMutation } from '../../hooks/useRegisterAuction';
 
 import BasicInfoStep from './BasicInfoStep';
 import PriceSettingStep from './PriceSettingStep';
@@ -37,62 +39,108 @@ export default function AuctionRegisterForm() {
     mode: 'all', // 기본적으로 모든 이벤트에서 유효성 검사 실행
   });
 
+  const { mutate, isPending } = useRegisterAuctionMutation({
+    onSuccess: (res) => {
+      console.log('🚀 ~ AuctionRegisterForm ~ res:', res);
+      alert('경매 등록에 성공했습니다.');
+      // TODO toast.success('경매가 성공적으로 등록되었습니다!');
+      // TODO router.push(`/auction/${res.data.goodsId}`);
+    },
+    onError: (err) => {
+      alert('경매 등록에 실패했습니다.');
+      // TODO toast.error('경매 등록에 실패했습니다.');
+    },
+  });
+
   async function onSubmit(values: z.infer<typeof auctionRegisterFormSchema>) {
-    console.log('폼 제출 성공:', values);
+    const payload = {
+      userId: 1, // TODO: 로그인 유저 ID 주입
+      goodsName: values.title,
+      goodsDescription: values.description,
+      category: values.category.toUpperCase(), // ENUM 형식 맞게 처리
+      minimumBidAmount: values.startingPrice,
+      goodsStatus: 'NEW',
+      goodsProcessStatus: 'ONGOING',
+      actionEndTime: new Date(
+        Date.now() + parseInt(values.duration) * 60 * 60 * 1000,
+      ).toISOString(),
+      buyNowPrice: values.enableBuyNow ? (values.buyNowPrice ?? 0) : 0,
+      image: values.images.map((file) =>
+        typeof file === 'string' ? file : URL.createObjectURL(file),
+      ),
+    };
 
-    // TODO 성공 토스트
-
-    // TODO 리스트 페이지 이동
+    mutate(payload);
   }
+
+  const getTabByField = (field: string) => {
+    const basicFields = [
+      'title',
+      'description',
+      'category',
+      'condition',
+      'images',
+    ];
+    const pricingFields = [
+      'startingPrice',
+      'enableBuyNow',
+      'buyNowPrice',
+      'duration',
+    ];
+    const shippingFields = ['shippingMethod', 'shippingFee', 'returnPolicy'];
+
+    if (basicFields.includes(field)) return 'basic';
+    if (pricingFields.includes(field)) return 'pricing';
+    if (shippingFields.includes(field)) return 'shipping';
+    return 'preview';
+  };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // 폼 유효성 검사 실행
-    const result = await form.trigger();
+    const isValid = await form.trigger();
 
-    if (!result) {
-      // 유효성 검사 실패 시 오류가 있는 첫 번째 탭으로 이동
-      const errors = form.formState.errors;
+    if (!isValid) {
+      const errorFields = Object.keys(
+        form.formState.errors,
+      ) as (keyof typeof form.formState.errors)[];
+      const firstInvalidTab = getTabByField(errorFields[0]);
+      setActiveTab(firstInvalidTab);
 
-      // 각 탭별로 오류가 있는지 확인
-      if (
-        errors.title ||
-        errors.description ||
-        errors.category ||
-        errors.condition ||
-        errors.images
-      ) {
-        // 기본 탭에 오류가 있으면 해당 탭으로 이동
-        setActiveTab('basic');
-      } else if (
-        errors.startingPrice ||
-        errors.buyNowPrice ||
-        errors.duration
-      ) {
-        // 가격 탭에 오류가 있으면 해당 탭으로 이동
-        setActiveTab('pricing');
-      } else if (
-        errors.shippingMethod ||
-        errors.shippingFee ||
-        errors.returnPolicy
-      ) {
-        setActiveTab('shipping');
-      }
-    } else {
-      // 유효성 검사 통과 시 폼 제출
-      onSubmit(form.getValues());
+      return;
     }
   };
 
-  const nextStep = () => {
+  const validateCurrentStep = async () => {
     if (activeTab === 'basic') {
-      setActiveTab('pricing');
-    } else if (activeTab === 'pricing') {
-      setActiveTab('shipping');
-    } else if (activeTab === 'shipping') {
-      setActiveTab('preview');
+      return await form.trigger([
+        'title',
+        'description',
+        'category',
+        'condition',
+        'images',
+      ]);
     }
+    if (activeTab === 'pricing') {
+      return await form.trigger(['startingPrice', 'buyNowPrice', 'duration']);
+    }
+    if (activeTab === 'shipping') {
+      return await form.trigger([
+        'shippingMethod',
+        'shippingFee',
+        'returnPolicy',
+      ]);
+    }
+    return true;
+  };
+
+  const nextStep = async () => {
+    const valid = await validateCurrentStep();
+    if (!valid) return;
+
+    if (activeTab === 'basic') setActiveTab('pricing');
+    else if (activeTab === 'pricing') setActiveTab('shipping');
+    else if (activeTab === 'shipping') setActiveTab('preview');
   };
 
   const prevStep = () => {
@@ -128,20 +176,39 @@ export default function AuctionRegisterForm() {
           {/* 폼 미리보기 */}
           <PreviewStep />
 
-          <div className="flex justify-between pt-4">
-            {activeTab !== 'basic' && (
-              <Button type="button" variant="outline" onClick={prevStep}>
-                이전
-              </Button>
-            )}
+          <div className="w-full pt-4 relative">
+            <div className="flex w-full justify-between text-xl fixed left-0 bottom-0 sm:relative">
+              {activeTab !== 'basic' && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full rounded-none sm:rounded"
+                  onClick={prevStep}
+                >
+                  <ArrowLeftIcon />
+                  이전
+                </Button>
+              )}
 
-            {activeTab !== 'preview' ? (
-              <Button type="button" onClick={nextStep}>
-                다음
-              </Button>
-            ) : (
-              <Button type="submit">경매 등록하기</Button>
-            )}
+              {activeTab !== 'preview' ? (
+                <Button
+                  type="button"
+                  onClick={nextStep}
+                  className="w-full rounded-none sm:rounded"
+                >
+                  다음
+                  <ArrowRightIcon />
+                </Button>
+              ) : (
+                <Button
+                  type="submit"
+                  onClick={() => onSubmit(form.getValues())}
+                  className="w-full"
+                >
+                  {isPending ? '등록중...' : '경매 등록하기'}
+                </Button>
+              )}
+            </div>
           </div>
         </form>
       </Form>

@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="font-sans flex flex-col">
         <Header />
-        <div className="flex-1">
+        <div className="flex-1 overflow-auto">
           <Providers>{children}</Providers>
         </div>
       </body>

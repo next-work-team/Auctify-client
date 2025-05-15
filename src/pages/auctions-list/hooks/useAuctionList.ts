@@ -4,7 +4,7 @@ import { AuctionFilter } from '@/features/auction-list-filter/store/useAuctionFi
 
 import { getAuctionList } from '../apis/getAuctionList';
 
-export function useAuctionListQuery(filters?: AuctionFilter) {
+export function useAuctionList(filters?: AuctionFilter) {
   return useInfiniteQuery({
     queryKey: ['auctionList', filters],
     queryFn: ({ pageParam = 1 }) => getAuctionList({ pageParam, filters }),

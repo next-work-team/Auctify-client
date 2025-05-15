@@ -13,12 +13,12 @@ import {
   SheetTrigger,
 } from '@/shared/ui/Sheet';
 
-import { useAuctionListQuery } from '../hooks/useAuctionListQuery';
+import { useAuctionList } from '../hooks/useAuctionList';
 
 // import FilterSection from './FilterSection';
 
 export default function AuctionListTopSection() {
-  const { data } = useAuctionListQuery();
+  const { data } = useAuctionList();
 
   return (
     <section className="container py-4 flex items-center justify-between">
