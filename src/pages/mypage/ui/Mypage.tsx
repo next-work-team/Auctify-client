@@ -2,14 +2,7 @@
 
 import type React from 'react';
 import { useState } from 'react';
-import {
-  User,
-  Heart,
-  BarChart4,
-  ThermometerSun,
-  Bell,
-  MapPinHouse,
-} from 'lucide-react';
+import { User, Heart, BarChart4, Bell, MapPinHouse } from 'lucide-react';
 
 import { Card } from '@/shared/ui/Card';
 import { Button } from '@/shared/ui/Button';
@@ -17,7 +10,7 @@ import { cn } from '@/shared/lib/utils';
 
 import { ProfileSection } from './ProfileSection';
 import { WishListSection } from './WishListSection';
-// import { ShippingAddressSection } from './ShippingAddressSection';
+// import { AddressSection } from './AddressSection';
 import { NotificationSection } from './NotificationSection';
 import { MyHistorySection } from './MyHistorySection';
 
@@ -53,11 +46,6 @@ export default function Mypage() {
       section: 'shippingAddress',
     },
     {
-      title: '온도 및 리뷰',
-      icon: <ThermometerSun className="h-5 w-5" />,
-      section: 'temperature',
-    },
-    {
       title: '알림 내역',
       icon: <Bell className="h-5 w-5" />,
       section: 'notifications',
@@ -73,7 +61,7 @@ export default function Mypage() {
       case 'myHistory':
         return <MyHistorySection />;
       // case 'shippingAddress':
-      //   return <ShippingAddressSection />;
+      //   return <AddressSection />;
       case 'notifications':
         return <NotificationSection />;
       default:
