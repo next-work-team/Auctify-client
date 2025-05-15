@@ -49,7 +49,7 @@ export function AuctionsDetailPage({ params }: { params: { id: string } }) {
           <Card>
             <CardContent className="flex flex-col gap-y-6">
               <AuctionSummaryInfo
-                goodsId={auction?.goodsId as number}
+                auctionId={auction?.goodsId as number}
                 title={auction?.goodsName as string}
                 activeBidders={18}
                 currentBid={auction?.currentBidPrice as number}
@@ -77,6 +77,7 @@ export function AuctionsDetailPage({ params }: { params: { id: string } }) {
 
           {/* 입찰 기록 섹션  */}
           <BidHistorySection
+            auctionId={params.id}
             bidHistory={[
               { user: 'photo_collector', amount: 250000, time: '10분 전' },
               { user: 'vintage_lover', amount: 240000, time: '15분 전' },

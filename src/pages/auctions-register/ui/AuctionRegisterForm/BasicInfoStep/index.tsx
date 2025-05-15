@@ -3,7 +3,6 @@ import { useFormContext } from 'react-hook-form';
 import { TabsContent } from '@/shared/ui';
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -35,11 +34,11 @@ export default function BasicInfoStep() {
               <FormItem>
                 <FormLabel>제목</FormLabel>
                 <FormControl>
-                  <Input placeholder="상품 제목을 입력하세요" {...field} />
+                  <Input
+                    placeholder="상품을 잘 나타내는 제목을 입력하세요."
+                    {...field}
+                  />
                 </FormControl>
-                <FormDescription>
-                  상품을 잘 나타내는 제목을 입력하세요.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             );
@@ -54,14 +53,11 @@ export default function BasicInfoStep() {
               <FormLabel>상세 설명</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="상품에 대한 자세한 설명을 입력하세요"
+                  placeholder="상품의 특징, 사용감, 구매 시기 등 상세한 정보를 제공하세요."
                   className="min-h-[200px]"
                   {...field}
                 />
               </FormControl>
-              <FormDescription>
-                상품의 특징, 사용감, 구매 시기 등 상세한 정보를 제공하세요.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

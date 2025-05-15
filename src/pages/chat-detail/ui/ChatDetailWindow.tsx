@@ -7,7 +7,6 @@ import {
   SendIcon,
   UserIcon,
 } from 'lucide-react';
-import Link from 'next/link';
 
 import { Button } from '@/shared/ui';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
@@ -21,11 +20,7 @@ import {
 import { ScrollArea } from '@/shared/ui/scroll-area';
 import { Input } from '@/shared/ui/input';
 
-export default function ChatWindow({
-  activeChat,
-}: {
-  activeChat: string | null;
-}) {
+export default function ChatDetailWindow({ chatId }: { chatId: number }) {
   const chatList = [
     {
       id: 'chat1',
@@ -105,7 +100,7 @@ export default function ChatWindow({
     },
   ];
 
-  const currentChat = chatList.find((chat) => chat.id === activeChat);
+  const currentChat = chatList.find((chat) => Number(chat.id) === chatId);
 
   // 채팅 메시지 데이터 (실제로는 서버에서 가져옴)
   const messages = [
@@ -180,7 +175,7 @@ export default function ChatWindow({
     }
   };
 
-  return activeChat ? (
+  return (
     <div className="border rounded-lg overflow-hidden flex flex-col">
       {/* 채팅 헤더 */}
       <div className="p-3 border-b flex items-center justify-between">
@@ -287,23 +282,6 @@ export default function ChatWindow({
           </Button>
         </form>
       </div>
-    </div>
-  ) : (
-    <NoActiveChatWindow />
-  );
-}
-
-function NoActiveChatWindow() {
-  return (
-    <div className="border rounded-lg flex flex-col items-center justify-center p-6">
-      <UserIcon className="h-16 w-16 text-muted-foreground mb-4" />
-      <h3 className="text-xl font-medium mb-2">대화를 선택하세요</h3>
-      <p className="text-center text-muted-foreground mb-6">
-        왼쪽 목록에서 대화를 선택하여 메시지를 확인하고 응답하세요.
-      </p>
-      <Button asChild>
-        <Link href="/auction-goods">경매 둘러보기</Link>
-      </Button>
     </div>
   );
 }

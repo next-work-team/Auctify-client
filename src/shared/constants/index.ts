@@ -1,8 +1,8 @@
 export const ROUTES = {
   HOME: '/',
   MYPAGE: {
-    ROOT: '/my',
-    BID_HISTORY: '/my/bid-history',
+    ROOT: '/mypage',
+    BID_HISTORY: '/mypage/bid-history',
   },
   AUCTIONS: {
     ROOT: '/auctions',

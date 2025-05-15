@@ -2,7 +2,7 @@
 
 import { useInView } from 'react-intersection-observer';
 
-import { useAuctionListQuery } from '@/pages/auctions-list/hooks/useAuctionListQuery';
+import { useAuctionList } from '@/pages/auctions-list/hooks/useAuctionList';
 import AuctionViewSelector from '@/features/auction-list-view/ui/AuctionViewSelector';
 import { useAuctionFilterStore } from '@/features/auction-list-filter/store/useAuctionFilterStore';
 
@@ -20,7 +20,7 @@ export default function AuctionListContainer() {
     isFetchingNextPage,
     isLoading,
     isError,
-  } = useAuctionListQuery(filters);
+  } = useAuctionList(filters);
 
   const auctions = data?.pages.flatMap((page) => page.data.content) ?? [];
 

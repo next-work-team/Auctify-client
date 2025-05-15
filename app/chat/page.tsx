@@ -1,5 +1,9 @@
-import { ChatListPage } from '@/pages/chat-list';
+import NoSelectedChatWindow from '@/pages/chat-list/ui/NoSelectedChatWindow';
 
 export default function Page() {
-  return <ChatListPage />;
+  return (
+    <>
+      <NoSelectedChatWindow />
+    </>
+  );
 }
