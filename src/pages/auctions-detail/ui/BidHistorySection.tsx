@@ -1,7 +1,6 @@
 'use client';
 
 import { Card, CardContent } from '@/shared/ui';
-import { useSSE } from '@/shared/hooks/useSSE';
 
 import { useBidHistorySSE } from '../hooks/useBidHistorySSE';
 

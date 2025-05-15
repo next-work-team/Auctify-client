@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { getMe } from '../services/getMe';
+import { getMe } from '../api/getMe';
 
 export function useMeQuery() {
   return useQuery({
