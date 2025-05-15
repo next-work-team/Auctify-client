@@ -96,11 +96,14 @@ export function MyHistorySection() {
             <TabsTrigger value="active" onClick={() => setFilter('active')}>
               진행중
             </TabsTrigger>
-            <TabsTrigger value="ended" onClick={() => setFilter('ended')}>
-              종료됨
+            <TabsTrigger value="pending" onClick={() => setFilter('sold')}>
+              결제 대기
             </TabsTrigger>
             <TabsTrigger value="sold" onClick={() => setFilter('sold')}>
               판매완료
+            </TabsTrigger>
+            <TabsTrigger value="ended" onClick={() => setFilter('ended')}>
+              종료됨
             </TabsTrigger>
           </TabsList>
         </div>

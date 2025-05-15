@@ -1,5 +1,5 @@
 export async function getMe() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/me`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/my`, {
     credentials: 'include', // 쿠키 포함 필수
   });
 
