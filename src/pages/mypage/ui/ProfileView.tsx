@@ -13,7 +13,7 @@ import {
   CardDescription,
 } from '@/shared/ui/Card';
 import { Label } from '@/shared/ui/Label';
-import { useAuthStore } from '@/shared/store/useAuthStore';
+import { useAuthStore } from '@/app/store/useAuthStore';
 
 import fetchTemperature from '../apis/fetchTemperatureApi';
 
