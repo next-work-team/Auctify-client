@@ -1,8 +1,8 @@
-// import { useEffect } from 'react';
+import { useEffect } from 'react';
 
-// import { useAuthStore } from '@/shared/store/useAuthStore';
 import { useSSE } from '@/shared/hooks/useSSE';
 
+import { useAuthStore } from '../store/useAuthStore';
 import { useMeQuery } from '../hooks/useMeQuery';
 
 /**
@@ -18,16 +18,23 @@ import { useMeQuery } from '../hooks/useMeQuery';
  * UI는 렌더링하지 않으며, 사이드 이펙트 전용입니다.
  */
 export function AppInitializer() {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL!;
+
   const { data: user } = useMeQuery();
   console.log('🚀 ~ AppInitializer ~ user:', user);
-  // const { setUser, clearUser } = useAuthStore();
+  const { setUserState, resetAuthState } = useAuthStore();
 
-  // useSSE();
+  useSSE({
+    url: `/${apiUrl}/sse/subscribe/notification`, // 서버 SSE endpoint
+    initialData: null, // 초기 데이터
+    withCredentials: true, // 필요한 경우
+    onError: (e) => console.error('SSE 에러:', e), // 선택적
+  });
 
-  // useEffect(() => {
-  //   if (user) setUser(user);
-  //   else clearUser();
-  // }, [clearUser, setUser, user]);
+  useEffect(() => {
+    if (user) setUserState(user);
+    else resetAuthState();
+  }, [resetAuthState, setUserState, user]);
 
   return null; // 또는 글로벌 로딩 스피너
 }

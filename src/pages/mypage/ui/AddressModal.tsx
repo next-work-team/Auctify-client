@@ -1,74 +1,144 @@
-// 'use client';
-// import React from 'react';
+'use client';
+import React from 'react';
 
-// import { Button } from '@/shared/ui/Button';
-// import {
-//   Dialog,
-//   DialogContent,
-//   DialogDescription,
-//   DialogFooter,
-//   DialogHeader,
-//   DialogTitle,
-// } from '@/shared/ui/dialog';
-// import { InputComponent } from '@/shared/ui/Input/InputComponent';
-// import { Label } from '@/shared/ui/Label';
+import { Button } from '@/shared/ui/Button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/shared/ui/dialog';
+import { Label } from '@/shared/ui/Label';
+import { Input } from '@/shared/ui/input';
 
-// type Props = {
-//   open: boolean;
-//   onOpenChange: (open: boolean) => void;
-//   newAddress: {
-//     addr: string;
-//     addrDetail: string;
-//     zipCode: string;
-//   };
-//   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-//   onAdd: () => void;
-// };
+type Props = {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  newAddress: {
+    addr: string;
+    addrDetail: string;
+    zipCode: string;
+  };
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onAdd: () => void;
+};
+declare global {
+  interface Window {
+    daum: {
+      Postcode: new (options: {
+        oncomplete: (data: DaumPostcodeData) => void;
+      }) => {
+        open: () => void;
+      };
+    };
+  }
+}
 
-// export function AddressModal({
-//   open,
-//   onOpenChange,
-//   newAddress,
-//   onChange,
-//   onAdd,
-// }: Props) {
-//   return (
-//     <Dialog open={open} onOpenChange={onOpenChange}>
-//       <DialogContent className="sm:max-w-[500px]">
-//         <DialogHeader>
-//           <DialogTitle>새 배송지 추가</DialogTitle>
-//           <DialogDescription>
-//             새로운 배송지 정보를 입력해주세요.
-//           </DialogDescription>
-//         </DialogHeader>
-//         <div className="grid gap-4 py-4">
-//           {[
-//             { id: 'addr', label: '주소', placeholder: '예: 서울시' },
-//             { id: 'addrDetail', label: '상세주소', placeholder: '예: 101동' },
-//             { id: 'zipCode', label: '우편번호', placeholder: '예: 11111' },
-//           ].map(({ id, label, placeholder }) => (
-//             <div key={id} className="grid grid-cols-4 items-center gap-4">
-//               <Label htmlFor={id} className="text-right">
-//                 {label}
-//               </Label>
-//               <InputComponent
-//                 id={id}
-//                 name={id}
-//                 value={newAddress[id as keyof typeof newAddress]}
-//                 onChange={onChange}
-//                 placeholder={placeholder}
-//                 className="col-span-3"
-//               />
-//             </div>
-//           ))}
-//         </div>
-//         <DialogFooter>
-//           <Button variant="outline" onClick={() => onOpenChange(false)}>
-//             취소
-//           </Button>
-//           <Button onClick={onAdd}>추가하기</Button>
-//         </DialogFooter>
-//       </DialogContent>
-//     </Dialog>
-//   );
-// }
+type DaumPostcodeData = {
+  address: string;
+  zonecode: string;
+  addressType: string;
+  apartment: string;
+  bname: string;
+  buildingName: string;
+  roadAddress: string;
+  jibunAddress: string;
+};
+
+export function AddressModal({
+  open,
+  onOpenChange,
+  newAddress,
+  onChange,
+  onAdd,
+}: Props) {
+  const openDaumPostcode = () => {
+    new window.daum.Postcode({
+      oncomplete: function (data: DaumPostcodeData) {
+        onChange({
+          target: {
+            name: 'addr',
+            value: data.address,
+          },
+        } as React.ChangeEvent<HTMLInputElement>);
+
+        onChange({
+          target: {
+            name: 'zipCode',
+            value: data.zonecode,
+          },
+        } as React.ChangeEvent<HTMLInputElement>);
+      },
+    }).open();
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-[500px]">
+        <DialogHeader>
+          <DialogTitle>새 배송지 추가</DialogTitle>
+          <DialogDescription>
+            새로운 배송지 정보를 입력해주세요.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="addr" className="text-right">
+            주소
+          </Label>
+          <div className="col-span-3 flex gap-2">
+            <Input
+              id="addr"
+              name="addr"
+              value={newAddress.addr}
+              onClick={openDaumPostcode}
+              readOnly
+              placeholder="주소를 검색하세요"
+            />
+            <Button type="button" onClick={openDaumPostcode}>
+              검색
+            </Button>
+          </div>
+        </div>
+
+        {/* 상세주소 */}
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="addrDetail" className="text-right">
+            상세주소
+          </Label>
+          <Input
+            id="addrDetail"
+            name="addrDetail"
+            value={newAddress.addrDetail}
+            onChange={onChange}
+            placeholder="예: 101동 1001호"
+            className="col-span-3"
+          />
+        </div>
+
+        {/* 우편번호 */}
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label htmlFor="zipCode" className="text-right">
+            우편번호
+          </Label>
+          <Input
+            id="zipCode"
+            name="zipCode"
+            value={newAddress.zipCode}
+            readOnly
+            placeholder="주소 검색 시 자동 입력"
+            className="col-span-3"
+          />
+        </div>
+
+        <DialogFooter>
+          <Button variant="outline" onClick={() => onOpenChange(false)}>
+            취소
+          </Button>
+          <Button onClick={onAdd}>추가하기</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}

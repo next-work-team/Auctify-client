@@ -5,6 +5,7 @@ import '@/app/globals.css';
 
 import Providers from '@/app/providers';
 import Header from '@/shared/ui/header/Header';
+import { LoadDaumPostcodeScript } from '@/app/providers/LoadDaumPostcodeScript';
 
 export const metadata: Metadata = {
   title: 'Auctify - 실시간 경매 플랫폼',
@@ -24,6 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans flex flex-col">
+        <LoadDaumPostcodeScript />
         <Header />
         <div className="flex-1 overflow-auto">
           <Providers>{children}</Providers>
