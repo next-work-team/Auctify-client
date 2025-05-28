@@ -1,12 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Bell, Check, Trash2 } from 'lucide-react';
 
 import { Button } from '@/shared/ui/Button';
 import { Tabs, TabsContent } from '@/shared/ui/Tabs';
+import { useSSE } from '@/shared/hooks/useSSE';
 
-interface Notification {
+interface NotificationType {
   id: string;
   title: string;
   message: string;
@@ -16,48 +17,59 @@ interface Notification {
 }
 
 export function NotificationSection() {
-  const [notifications, setNotifications] = useState<Notification[]>([
-    {
-      id: '1',
-      title: '새로운 입찰',
-      message: "귀하의 '빈티지 시계' 상품에 새로운 입찰이 있습니다.",
-      date: '2023년 12월 10일',
-      isRead: false,
-      type: 'bid',
-    },
-    {
-      id: '2',
-      title: '경매 종료 임박',
-      message: "귀하의 '게이밍 노트북' 경매가 24시간 후 종료됩니다.",
-      date: '2023년 12월 9일',
-      isRead: false,
-      type: 'auction',
-    },
-    {
-      id: '3',
-      title: '새로운 메시지',
-      message: '김철수님으로부터 새로운 메시지가 도착했습니다.',
-      date: '2023년 12월 8일',
-      isRead: true,
-      type: 'message',
-    },
-    {
-      id: '4',
-      title: '시스템 알림',
-      message: '서비스 이용약관이 업데이트되었습니다. 확인해주세요.',
-      date: '2023년 12월 5일',
-      isRead: true,
-      type: 'system',
-    },
-  ]);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+  // const [notifications, setNotifications] = useState<Notification[]>([
+  //   {
+  //     id: '1',
+  //     title: '새로운 입찰',
+  //     message: "귀하의 '빈티지 시계' 상품에 새로운 입찰이 있습니다.",
+  //     date: '2023년 12월 10일',
+  //     isRead: false,
+  //     type: 'bid',
+  //   },
+  //   {
+  //     id: '2',
+  //     title: '경매 종료 임박',
+  //     message: "귀하의 '게이밍 노트북' 경매가 24시간 후 종료됩니다.",
+  //     date: '2023년 12월 9일',
+  //     isRead: false,
+  //     type: 'auction',
+  //   },
+  //   {
+  //     id: '3',
+  //     title: '새로운 메시지',
+  //     message: '김철수님으로부터 새로운 메시지가 도착했습니다.',
+  //     date: '2023년 12월 8일',
+  //     isRead: true,
+  //     type: 'message',
+  //   },
+  //   {
+  //     id: '4',
+  //     title: '시스템 알림',
+  //     message: '서비스 이용약관이 업데이트되었습니다. 확인해주세요.',
+  //     date: '2023년 12월 5일',
+  //     isRead: true,
+  //     type: 'system',
+  //   },
+  // ]);
+  const [notifications, setNotifications] = useState<NotificationType[]>([]);
+
+  const { data } = useSSE<NotificationType>({
+    url: `${apiUrl}/sse/`,
+    initialData: null,
+    withCredentials: true,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setNotifications((prev) => [data, ...prev]);
+    }
+  }, [data]);
 
   const markAsRead = (id: string) => {
-    setNotifications(
-      notifications.map((notification) =>
-        notification.id === id
-          ? { ...notification, isRead: true }
-          : notification,
-      ),
+    setNotifications((prev) =>
+      prev.map((n) => (n.id === id ? { ...n, isRead: true } : n)),
     );
   };
 

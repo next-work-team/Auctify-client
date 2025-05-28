@@ -1,7 +1,6 @@
 import { ExternalLink, Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 
 import { Card, CardContent, CardFooter } from '@/shared/ui/Card';
 import { Separator } from '@/shared/ui/separator';
@@ -66,8 +65,9 @@ export function WishListSection() {
   useEffect(() => {
     const fetchWishList = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/user/myLikeGoods`);
-        setWishlistItems(response.data);
+        const response = await fetch(`${apiUrl}/user/myLikeGoods`);
+        const data = await response.json();
+        setWishlistItems(data);
       } catch (error) {
         console.error('데이터 불러오기 실패:', error);
       }

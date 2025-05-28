@@ -54,6 +54,8 @@ export function AddressModal({
   onChange,
   onAdd,
 }: Props) {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
   const openDaumPostcode = () => {
     new window.daum.Postcode({
       oncomplete: function (data: DaumPostcodeData) {
@@ -94,7 +96,6 @@ export function AddressModal({
               value={newAddress.addr}
               onClick={openDaumPostcode}
               readOnly
-              placeholder="주소를 검색하세요"
             />
             <Button type="button" onClick={openDaumPostcode}>
               검색
@@ -102,7 +103,6 @@ export function AddressModal({
           </div>
         </div>
 
-        {/* 상세주소 */}
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="addrDetail" className="text-right">
             상세주소
@@ -112,12 +112,10 @@ export function AddressModal({
             name="addrDetail"
             value={newAddress.addrDetail}
             onChange={onChange}
-            placeholder="예: 101동 1001호"
             className="col-span-3"
           />
         </div>
 
-        {/* 우편번호 */}
         <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="zipCode" className="text-right">
             우편번호
@@ -127,7 +125,6 @@ export function AddressModal({
             name="zipCode"
             value={newAddress.zipCode}
             readOnly
-            placeholder="주소 검색 시 자동 입력"
             className="col-span-3"
           />
         </div>
