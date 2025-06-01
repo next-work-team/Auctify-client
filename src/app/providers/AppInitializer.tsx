@@ -25,15 +25,20 @@ export function AppInitializer() {
   const { setUserState, resetAuthState } = useAuthStore();
 
   useSSE({
-    url: `/${apiUrl}/sse/subscribe/notification`, // 서버 SSE endpoint
+    url: `${apiUrl}/sse/subscribe/notification`, // 서버 SSE endpoint
     initialData: null, // 초기 데이터
     withCredentials: true, // 필요한 경우
     onError: (e) => console.error('SSE 에러:', e), // 선택적
   });
 
   useEffect(() => {
-    if (user) setUserState(user);
-    else resetAuthState();
+    if (user) {
+      console.log('✅ 로그인 성공:', user);
+      setUserState(user);
+    } else {
+      console.log('🚫 로그인 정보 없음 (비로그인 상태)');
+      resetAuthState();
+    }
   }, [resetAuthState, setUserState, user]);
 
   return null; // 또는 글로벌 로딩 스피너
