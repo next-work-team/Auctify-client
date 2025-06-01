@@ -6,7 +6,7 @@ import { Button } from '@/shared/ui';
 
 export default function KakaoLoginButton() {
   const handleKaKaoLogin = async () => {
-    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/kakao`;
+    window.location.href = `https://api.auctify.shop/oauth2/authorization/kakao`;
   };
 
   return (
