@@ -19,10 +19,10 @@ import fetchTemperature from '../apis/fetchTemperatureApi';
 
 interface Props {
   profile: {
-    nickname: string;
-    bio: string;
-    birthdate: string;
-    image: string | null;
+    nickname?: string;
+    bio?: string;
+    birthdate?: string;
+    image?: string | null;
   };
 }
 
@@ -90,7 +90,7 @@ export function ProfileView({ profile }: Props) {
               닉네임
             </Label>
             <div className="rounded-md border border-input px-3 py-2">
-              {profile.nickname}
+              {profile.nickname ?? '닉네임 정보가 없습니다'}
             </div>
           </div>
 
@@ -100,14 +100,14 @@ export function ProfileView({ profile }: Props) {
               출생일
             </Label>
             <div className="rounded-md border border-input px-3 py-2">
-              {profile.birthdate}
+              {profile.birthdate ?? '출생일 정보가 없습니다'}
             </div>
           </div>
 
           <div className="space-y-2">
             <Label>소개</Label>
             <div className="rounded-md border border-input px-3 py-2">
-              {profile.bio}
+              {profile.bio ?? '소개 정보가 없습니다'}
             </div>
           </div>
         </CardContent>

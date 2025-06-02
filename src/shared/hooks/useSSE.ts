@@ -13,7 +13,7 @@ interface UseSSEOptions<T> {
   url: string;
   withCredentials?: boolean;
   onError?: (error: Event) => void;
-  initialData?: T;
+  initialData: T | null;
 }
 
 export function useSSE<T = unknown>({
@@ -23,7 +23,7 @@ export function useSSE<T = unknown>({
   initialData,
 }: UseSSEOptions<T>) {
   // 최신 수신된 데이터를 저장
-  const [data, setData] = useState<T | undefined>(initialData);
+  const [data, setData] = useState<T | null>(initialData);
 
   // 현재 SSE 연결 상태
   const [isConnected, setIsConnected] = useState(false);

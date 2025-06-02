@@ -10,7 +10,7 @@ import { cn } from '@/shared/lib/utils';
 
 import { ProfileSection } from './ProfileSection';
 import { WishListSection } from './WishListSection';
-// import { AddressSection } from './AddressSection';
+import { AddressSection } from './AddressSection';
 import { NotificationSection } from './NotificationSection';
 import { MyHistorySection } from './MyHistorySection';
 
@@ -60,8 +60,8 @@ export default function Mypage() {
         return <WishListSection />;
       case 'myHistory':
         return <MyHistorySection />;
-      // case 'shippingAddress':
-      //   return <AddressSection />;
+      case 'shippingAddress':
+        return <AddressSection />;
       case 'notifications':
         return <NotificationSection />;
       default:

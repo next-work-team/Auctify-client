@@ -1,6 +1,7 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { BarChart4 } from 'lucide-react';
-import axios from 'axios';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/Tabs';
 
@@ -20,61 +21,67 @@ interface AuctionItem {
 export function MyHistorySection() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [filter, setFilter] = useState<string>('all');
-  // const [auctionItems, setAuctionItems] = useState<AuctionItem[]>([]);
-  const auctionItems: AuctionItem[] = [
-    {
-      id: '1',
-      title: '시계',
-      startPrice: '100,000원',
-      currentPrice: '150,000원',
-      endDate: '2023년 12월 20일',
-      image: '',
-      status: 'active',
-      bids: 5,
-    },
-    {
-      id: '2',
-      title: '랩탑',
-      startPrice: '800,000원',
-      currentPrice: '950,000원',
-      endDate: '2023년 12월 15일',
-      image: '',
-      status: 'active',
-      bids: 8,
-    },
-    {
-      id: '3',
-      title: '스마트워치',
-      startPrice: '150,000원',
-      currentPrice: '200,000원',
-      endDate: '2023년 12월 1일',
-      image: '',
-      status: 'sold',
-      bids: 12,
-    },
-    {
-      id: '4',
-      title: '나이키',
-      startPrice: '120,000원',
-      currentPrice: '120,000원',
-      endDate: '2023년 12월 1일',
-      image: '',
-      status: 'sold',
-      bids: 0,
-    },
-  ];
+  const [auctionItems, setAuctionItems] = useState<AuctionItem[]>([]);
 
-  // useEffect(() => {
-  //   const fetchAuctions = async () => {
-  //     try {
-  //       const response = await axios.get(`${apiUrl}/user/myBid`);
-  //       setAuctionItems(response.data);
-  //     } catch (error) {
-  //       console.error('Failed to fetch auction items', error);
-  //     }
-  //   };
-  //   fetchAuctions();
-  // }, []);
+  // 🔹 목데이터 주석처리
+  // const auctionItems: AuctionItem[] = [
+  //   {
+  //     id: '1',
+  //     title: '시계',
+  //     startPrice: '100,000원',
+  //     currentPrice: '150,000원',
+  //     endDate: '2023년 12월 20일',
+  //     image: '',
+  //     status: 'active',
+  //     bids: 5,
+  //   },
+  //   {
+  //     id: '2',
+  //     title: '랩탑',
+  //     startPrice: '800,000원',
+  //     currentPrice: '950,000원',
+  //     endDate: '2023년 12월 15일',
+  //     image: '',
+  //     status: 'active',
+  //     bids: 8,
+  //   },
+  //   {
+  //     id: '3',
+  //     title: '스마트워치',
+  //     startPrice: '150,000원',
+  //     currentPrice: '200,000원',
+  //     endDate: '2023년 12월 1일',
+  //     image: '',
+  //     status: 'sold',
+  //     bids: 12,
+  //   },
+  //   {
+  //     id: '4',
+  //     title: '나이키',
+  //     startPrice: '120,000원',
+  //     currentPrice: '120,000원',
+  //     endDate: '2023년 12월 1일',
+  //     image: '',
+  //     status: 'sold',
+  //     bids: 0,
+  //   },
+  // ];
+
+  // 🔹 fetch 로 변경
+  useEffect(() => {
+    const fetchAuctions = async () => {
+      try {
+        const res = await fetch(`${apiUrl}/user/myBid`);
+        if (!res.ok) throw new Error('서버 응답 실패');
+        const data: AuctionItem[] = await res.json();
+        setAuctionItems(data);
+      } catch (error) {
+        console.error('Failed to fetch auction items', error);
+      }
+    };
+
+    fetchAuctions();
+  }, [apiUrl]);
 
   const filteredAuctions =
     filter === 'all'
