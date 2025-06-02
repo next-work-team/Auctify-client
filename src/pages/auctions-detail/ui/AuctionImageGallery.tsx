@@ -1,16 +1,19 @@
 export default function AuctionImageGallery({
-  images,
+  images = [],
   title,
 }: {
   images: string[];
   title: string;
 }) {
+  const fallbackImage = '/placeholder.svg';
+  const firstImage = images?.[0] ?? fallbackImage;
+
   return (
     <section>
       <div className="overflow-hidden rounded-lg border">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={images[0] || '/placeholder.svg'}
+          src={firstImage}
           alt={title}
           className="h-[300px] w-full object-cover sm:h-[400px] md:h-[500px]"
         />

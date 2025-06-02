@@ -9,6 +9,7 @@ export const unlikeAuction = async (
     `${process.env.NEXT_PUBLIC_API_URL}/api/auction/unlike`,
     {
       method: 'POST',
+      credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         goodsId,

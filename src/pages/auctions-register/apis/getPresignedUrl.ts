@@ -1,6 +1,7 @@
 export async function getPresignedUrl(imageName: string) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/presigned`, {
     method: 'POST',
+    credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ imageName }),
   });

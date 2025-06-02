@@ -2,6 +2,7 @@ import { Auction } from '@/entities/auctions/types';
 import { PaginatedResponse } from '@/shared/types/paginated';
 import { AuctionFilter } from '@/features/auction-list-filter/store/useAuctionFilterStore';
 import { delay } from '@/shared/utils/delay';
+import { BACKEND_URL } from '@/shared/constants';
 
 import { generateAuctionList } from './mock';
 
@@ -32,7 +33,7 @@ export async function getAuctionList({
     });
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/auction/search?${query.toString()}`,
+      `${BACKEND_URL}/api/auction/search?${query.toString()}`,
     );
 
     if (!response.ok) {

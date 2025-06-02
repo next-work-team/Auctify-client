@@ -13,7 +13,7 @@ interface UseSSEOptions<T> {
   url: string;
   withCredentials?: boolean;
   onError?: (error: Event) => void;
-  initialData: T;
+  initialData?: T;
 }
 
 export function useSSE<T = unknown>({
@@ -43,6 +43,7 @@ export function useSSE<T = unknown>({
       try {
         // JSON 형식이면 파싱해서 저장
         const parsed = JSON.parse(event.data);
+        console.log(event.data);
         setData(parsed as T);
       } catch {
         // 문자열 형식일 경우 그대로 저장 (fallback)

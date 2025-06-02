@@ -2,24 +2,27 @@
 
 import { Card, CardContent } from '@/shared/ui';
 
-import { useBidHistorySSE } from '../hooks/useBidHistorySSE';
+import { useBidDetailSSE } from '../hooks/useBidDetailSSE';
 
 interface BidHistoryItem {
-  user: string;
-  amount: number;
-  time: string;
+  nickname: string;
+  price: number;
+  createdAt: Date;
 }
 
 interface BidHistorySectionProps {
-  auctionId: string;
-  bidHistory: BidHistoryItem[]; // API로 받은 초기 데이터
+  auctionId: number;
+  bidHistory: BidHistoryItem[];
 }
 
 export default function BidHistorySection({
   auctionId,
   bidHistory: initialBidHistory,
 }: BidHistorySectionProps) {
-  const { data, isConnected } = useBidHistorySSE(auctionId, initialBidHistory);
+  console.log('🚀 ~ initialBidHistory:', initialBidHistory);
+  const { data, isConnected } = useBidDetailSSE(auctionId);
+
+  const bidHistoryData = data?.bidHistory;
 
   return (
     <Card>
@@ -36,12 +39,14 @@ export default function BidHistorySection({
         </div>
 
         <div className="space-y-3">
-          {data.map((bid, index) => (
+          {bidHistoryData?.map((bidHistoryDataItem, index) => (
             <div key={index} className="flex justify-between text-sm">
-              <div className="font-medium">{bid.user}</div>
+              <div className="font-medium">{bidHistoryDataItem.nickname}</div>
               <div className="flex gap-4">
-                <span>₩{bid.amount.toLocaleString()}</span>
-                <span className="text-muted-foreground">{bid.time}</span>
+                <span>₩{bidHistoryDataItem.price.toLocaleString()}</span>
+                <span className="text-muted-foreground">
+                  {bidHistoryDataItem.createdAt.toLocaleDateString()}
+                </span>
               </div>
             </div>
           ))}
