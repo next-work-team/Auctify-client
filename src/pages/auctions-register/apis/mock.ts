@@ -1,13 +1,10 @@
 import { faker } from '@faker-js/faker';
 
-import type {
-  RegisterAuctionRequest,
-  RegisterAuctionResponse,
-} from '../types/index';
+import { AuctionRegisterRequest, AuctionRegisterResponse } from '../types';
 
 export const generateMockRegisterAuction = (
-  data: RegisterAuctionRequest,
-): RegisterAuctionResponse => {
+  data: AuctionRegisterRequest,
+): AuctionRegisterResponse => {
   return {
     status: 200,
     message: 'mock 등록 성공',

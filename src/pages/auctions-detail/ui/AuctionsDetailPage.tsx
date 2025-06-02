@@ -76,24 +76,7 @@ export function AuctionsDetailPage({ params }: { params: { id: string } }) {
           </Card>
 
           {/* 입찰 기록 섹션  */}
-          <BidHistorySection
-            auctionId={params.id}
-            bidHistory={[
-              { user: 'photo_collector', amount: 250000, time: '10분 전' },
-              { user: 'vintage_lover', amount: 240000, time: '15분 전' },
-              {
-                user: 'camera_enthusiast',
-                amount: 230000,
-                time: '30분 전',
-              },
-              {
-                user: 'film_photographer',
-                amount: 220000,
-                time: '45분 전',
-              },
-              { user: 'retro_gear', amount: 210000, time: '1시간 전' },
-            ]}
-          />
+          <BidHistorySection auctionId={Number(params.id)} bidHistory={[]} />
         </div>
       </div>
     </div>

@@ -1,13 +1,13 @@
 import { faker } from '@faker-js/faker';
 
-export const generateMockAuctionDetail = (goodsId: number) => {
+export const generateMockAuctionDetail = (auctionId: number) => {
   const now = Date.now();
 
   return {
     status: 0,
     message: '성공적으로 불러왔습니다.',
     data: {
-      goodsId,
+      goodsId: auctionId,
       goodsName: faker.commerce.productName(),
       goodsDescription: faker.commerce.productDescription(),
       buyNowPrice: faker.number.int({ min: 100000, max: 3000000 }),

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import { Badge, Button } from '@/shared/ui';
+import { ROUTES } from '@/shared/constants';
 
 export default function BannerSection() {
   return (
@@ -26,14 +27,12 @@ export default function BannerSection() {
               </p>
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Button size="lg" className="px-8">
-                경매 참여하기
+              <Button asChild size="lg" className="px-8">
+                <Link href={ROUTES.AUCTIONS.ROOT}>경매 참여하기</Link>
               </Button>
-              <Link href="/auction-goods/register">
-                <Button size="lg" variant="outline">
-                  경매 등록하기
-                </Button>
-              </Link>
+              <Button asChild size="lg" variant="outline">
+                <Link href={ROUTES.AUCTIONS.REGISTER}>경매 등록하기</Link>
+              </Button>
             </div>
           </div>
           <div className="mx-auto w-full max-w-[500px] lg:max-w-none hidden lg:block">

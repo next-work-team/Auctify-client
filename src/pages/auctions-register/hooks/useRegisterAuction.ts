@@ -1,13 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 
-import type {
-  RegisterAuctionRequest,
-  RegisterAuctionResponse,
-} from '../types/index';
+import type { AuctionRegisterResponse } from '../types/index';
 import { registerAuction } from '../apis/registerAuction';
 
 interface UseRegisterAuctionMutationOptions {
-  onSuccess?: (data: RegisterAuctionResponse) => void;
+  onSuccess?: (data: AuctionRegisterResponse) => void;
   onError?: (error: unknown) => void;
 }
 

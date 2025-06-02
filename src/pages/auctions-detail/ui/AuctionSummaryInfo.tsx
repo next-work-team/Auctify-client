@@ -1,6 +1,6 @@
 import { ClockIcon, EyeIcon, UsersIcon } from 'lucide-react';
 
-import { useSSE } from '@/shared/hooks/useSSE';
+import { useBidDetailSSE } from '../hooks/useBidDetailSSE';
 
 interface AuctionSummaryProps {
   auctionId: number;
@@ -11,12 +11,6 @@ interface AuctionSummaryProps {
   activeBidders: number;
 }
 
-interface AuctionSummarySSEData {
-  currentBid: number;
-  activeBidders: number;
-  timeLeft: string;
-}
-
 export default function AuctionSummaryInfo({
   auctionId,
   title,
@@ -25,15 +19,10 @@ export default function AuctionSummaryInfo({
   timeLeft: initialTimeLeft,
   activeBidders: initialBidders,
 }: AuctionSummaryProps) {
-  const { data: sseData, isConnected } = useSSE<AuctionSummarySSEData>({
-    url: `/api/sse/auction/${auctionId}/summary`,
-    withCredentials: true,
-    initialData: {
-      currentBid: initialBid,
-      activeBidders: initialBidders,
-      timeLeft: initialTimeLeft,
-    },
-  });
+  const { data: sseData, isConnected } = useBidDetailSSE(auctionId);
+  console.log('🚀 ~ sseData:', sseData);
+
+  const auctionSummaryData = sseData?.auctionSummary;
 
   return (
     <div>
@@ -42,8 +31,8 @@ export default function AuctionSummaryInfo({
       <div className="flex justify-between items-end">
         <div>
           <p className="text-sm text-muted-foreground">현재 입찰가</p>
-          <p className="text-3xl font-bold">₩{initialBid.toLocaleString()}</p>
-          <p>{sseData?.currentBid.toLocaleString()}</p>
+          <p className="text-3xl font-bold">₩{initialBid?.toLocaleString()}</p>
+          <p>{auctionSummaryData?.maxBidPrice?.toLocaleString()}</p>
         </div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <EyeIcon className="h-4 w-4" />
@@ -55,12 +44,12 @@ export default function AuctionSummaryInfo({
         <div className="flex items-center gap-1 text-amber-500">
           <ClockIcon className="h-5 w-5" />
           <span className="font-medium">{initialTimeLeft} 남음</span>
-          <span>{sseData?.timeLeft}</span>
+          <span>{auctionSummaryData?.remainingTime}</span>
         </div>
         <div className="flex items-center gap-1">
           <UsersIcon className="h-4 w-4" />
           <span>{initialBidders}명 참여중</span>
-          <span>{sseData?.activeBidders}명 참여중</span>
+          <span>{auctionSummaryData?.participantsCount}명 참여중</span>
         </div>
       </div>
 

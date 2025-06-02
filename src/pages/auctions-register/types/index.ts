@@ -1,4 +1,4 @@
-export interface RegisterAuctionRequest {
+export interface AuctionRegisterRequest {
   userId: number;
   goodsName: string;
   goodsDescription: string;
@@ -10,8 +10,7 @@ export interface RegisterAuctionRequest {
   buyNowPrice: number;
   image: string[];
 }
-
-export interface RegisterAuctionResponse {
+export interface AuctionRegisterResponse {
   status: number;
   message: string;
   data: {

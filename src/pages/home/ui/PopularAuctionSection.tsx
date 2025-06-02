@@ -1,5 +1,9 @@
+import { ChevronRightIcon } from 'lucide-react';
+import Link from 'next/link';
+
 import { Auction, AuctionCard } from '@/entities/auctions';
 import { Button } from '@/shared/ui';
+import { ROUTES } from '@/shared/constants';
 
 export default function PopularAuctionSection() {
   const auctions: Auction[] = [
@@ -67,9 +71,11 @@ export default function PopularAuctionSection() {
           </div>
 
           <div className="mt-8 text-center">
-            <Button variant="outline" className="gap-1">
-              더 많은 인기 경매 보기
-              {/* <ChevronRight className="h-4 w-4" /> */}
+            <Button asChild variant="outline" className="gap-1">
+              <Link href={ROUTES.AUCTIONS.ROOT}>
+                인기 경매 더보기
+                <ChevronRightIcon className="h-4 w-4" />
+              </Link>
             </Button>
           </div>
         </div>

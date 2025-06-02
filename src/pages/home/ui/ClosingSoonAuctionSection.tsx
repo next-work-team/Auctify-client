@@ -1,5 +1,9 @@
+import { ChevronRightIcon } from 'lucide-react';
+import Link from 'next/link';
+
 import { Button } from '@/shared/ui/Button';
 import { Auction, AuctionCard } from '@/entities/auctions';
+import { ROUTES } from '@/shared/constants';
 
 export default function ClosingSoonAuctionSection() {
   const auctions: Auction[] = [
@@ -91,9 +95,11 @@ export default function ClosingSoonAuctionSection() {
           </div>
 
           <div className="mt-8 text-center">
-            <Button variant="outline" className="gap-1">
-              더 많은 라이브 경매 보기
-              {/* <ChevronRight className="h-4 w-4" /> */}
+            <Button asChild variant="outline" className="gap-1">
+              <Link href={ROUTES.AUCTIONS.ROOT}>
+                마감 임박 경매 더보기
+                <ChevronRightIcon className="h-4 w-4" />
+              </Link>
             </Button>
           </div>
         </div>
