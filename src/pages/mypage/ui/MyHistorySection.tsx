@@ -71,7 +71,7 @@ export function MyHistorySection() {
   useEffect(() => {
     const fetchAuctions = async () => {
       try {
-        const res = await fetch(`${apiUrl}/user/myBid`);
+        const res = await fetch(`${apiUrl}/api/user/myBid`);
         if (!res.ok) throw new Error('서버 응답 실패');
         const data: AuctionItem[] = await res.json();
         setAuctionItems(data);

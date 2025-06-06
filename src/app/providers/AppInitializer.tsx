@@ -25,7 +25,7 @@ export function AppInitializer() {
   const { setUserState, resetAuthState } = useAuthStore();
 
   useSSE({
-    url: `${apiUrl}/sse/subscribe/notification`, // 서버 SSE endpoint
+    url: `${apiUrl}/api/sse/subscribe/notification`, // 서버 SSE endpoint
     initialData: null, // 초기 데이터
     withCredentials: true, // 필요한 경우
     onError: (e) => console.error('SSE 에러:', e), // 선택적
