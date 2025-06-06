@@ -10,7 +10,7 @@ const fetchUserProfileApi = async (
   temperature: number | null;
 }> => {
   // 해당 유저 ID에 대한 정보를 요청함
-  const res = await fetch(`${apiUrl}/user/${userId}`);
+  const res = await fetch(`${apiUrl}/api/user/${userId}`);
 
   // 응답 상태가 실패일 경우 에러를 던져서 catch 블록에서 처리하게 함
   if (!res.ok) {

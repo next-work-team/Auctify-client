@@ -56,7 +56,7 @@ export function NotificationSection() {
   const [notifications, setNotifications] = useState<NotificationType[]>([]);
 
   const { data } = useSSE<NotificationType>({
-    url: `${apiUrl}/sse/`,
+    url: `${apiUrl}/api/notification`,
     initialData: null,
     withCredentials: true,
   });

@@ -65,7 +65,7 @@ export function WishListSection() {
   useEffect(() => {
     const fetchWishList = async () => {
       try {
-        const response = await fetch(`${apiUrl}/user/myLikeGoods`);
+        const response = await fetch(`${apiUrl}/api/user/myLikeGoods`);
         const data = await response.json();
         setWishlistItems(data);
       } catch (error) {

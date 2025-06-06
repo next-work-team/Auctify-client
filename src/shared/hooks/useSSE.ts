@@ -31,10 +31,11 @@ export function useSSE<T = unknown>({
 
   useEffect(() => {
     // EventSource 인스턴스 생성 (SSE 연결 시작)
-    const eventSource = new EventSource(url, { withCredentials });
+    const eventSource = new EventSource(url, { withCredentials: true });
 
     // 연결이 성공적으로 열렸을 때 호출
     eventSource.onopen = () => {
+      console.log('✅ SSE 연결 성공:', url);
       setIsConnected(true);
     };
 

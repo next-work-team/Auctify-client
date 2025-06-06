@@ -3,7 +3,9 @@
 export const connectSSE = () => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  const eventSource = new EventSource(`${apiUrl}/sse/subscribe`);
+  const eventSource = new EventSource(
+    `${apiUrl}/api/sse/subscribe/notification`,
+  );
 
   // 서버에서 메시지가 오면 실행됨
   eventSource.onmessage = (event) => {
